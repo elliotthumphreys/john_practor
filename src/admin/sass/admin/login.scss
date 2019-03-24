@@ -1,0 +1,62 @@
+.login {
+    grid-template-columns: 10% 1fr 10%;
+    grid-template-rows: 1fr 1fr 1fr; 
+
+    .warning {
+        color: white;
+        background-color: #d63031;
+        grid-row-start: 1;
+        grid-column-start: 2;
+        grid-row-end: 1;
+        padding: 0.5em;
+        font-size: 0.9em;
+        align-self: end;
+        max-width: 400px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    form{
+        justify-self: center;
+        grid-column-start: 2;
+        grid-row-start: 2;
+        background-color: #40739e;
+        border-radius: 0.1em;
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        max-width: 400px;
+        width: 100%;
+
+        h2 {
+            padding: 0 0 0 0.5em;
+            color: white;
+            font-size: 1.5em;
+            align-self: center;
+        }
+
+        input {
+            border: 0;
+            padding-left: 0.5em;
+            background-color: white;
+
+            &:invalid {
+                color: red;
+            }
+
+            &:last-child {
+                padding-left: 0;
+                background-color: #dfe6e9;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #CAD3C8
+                }
+
+                &:disabled {
+                    background-color: #CAD3C8;
+                    cursor: default;
+                }
+            }
+        }
+    }
+}

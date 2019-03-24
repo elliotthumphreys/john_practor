@@ -1,0 +1,16 @@
+.home {
+    .masonry {
+        width: 100%;
+        max-width: 1200px;
+        margin:auto;
+    }
+}
+
+.product-card {
+    > a {
+      display: block;
+      img {
+        width: 100%;
+      }
+    }
+  }
