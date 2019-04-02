@@ -8,8 +8,6 @@ const ProductCard = ({ id, path, price, isSold, history: { push } }) => {
                 push({ pathname: `/product/${id}` })
             }}>
                 <img src={path} />
-                <p>&pound;{price}</p>
-                {isSold && <span className="fas fa-circle" />}
             </a>
         </div>
     )

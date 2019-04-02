@@ -1,0 +1,25 @@
+{
+    "pages": [
+        {
+            "name": "Collection",
+            "slug": "products-collection",
+            "data": {
+                "body": "some-typescript-body-data",
+                "images": [
+                    {
+                        "id": "coverImage",
+                        "path": "1ffa06a6-04c7-41b1-b438-424c354c457f.png"
+                    }
+                ],
+                "page-specific-field-1": ["example field", "text"],
+                "page-specific-field-2": ["example field", "textarea"]
+            }
+        }
+    ],
+    "navigation": [
+        {
+            "name": "Weddings",
+            "slug": "collection?category=wedding"
+        }
+    ]
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react'
-import { GetHat, GetContent } from '../util'
+import { GetHat, GetContent } from '../../util'
 
 const Product = ({ history }) => {
     const [ content, setContent ] = useState({})

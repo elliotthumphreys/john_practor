@@ -5,6 +5,7 @@
   nav {
     grid-column-start: 2;
     grid-row-start: 2;
+    
     a {
       color: white;
       cursor: pointer;
@@ -13,6 +14,25 @@
 
       &:hover {
         color: white;
+      }
+    }
+
+    > .page-navigation {
+      background: white;
+      padding: 1em 1em calc(1em - 3px);
+      margin-bottom: 3px;
+
+      > a {
+        margin: 0;
+        color: black;
+        text-decoration: none;
+        display: inline-block;
+        border-bottom: solid 2px white;
+        margin-right: 0.5em;
+
+        &.active, &:hover {
+          border-bottom: solid 2px orange;
+        }
       }
     }
   }
@@ -33,6 +53,10 @@
       font-family: "nta", Arial, sans-serif;
       font-weight: 400;
       margin-bottom: 2em;
+      
+      &.low-margin {
+        margin-bottom: 0.5em;
+      }
 
       .form-hint {
         font-family: "nta", Arial, sans-serif;
@@ -64,6 +88,10 @@
           outline: 3px solid #ffbf47;
           outline-offset: 0;
         }
+      }
+
+      textarea {
+        min-height: 120px
       }
     }
 
@@ -121,7 +149,11 @@
 		border-left: solid;
 		padding-left: 1em;
 		> label {
-			margin-bottom: 0;
+      margin-bottom: 0;
+      
+      .low-margin {
+        margin-bottom: 0.5em;
+      }
 		}
 	  .image {
     width: 25%;

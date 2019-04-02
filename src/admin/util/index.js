@@ -224,15 +224,7 @@ export const UpdateHat = async ({id, title, description, price, category, credit
     }
 }
 
-export const UpdateMainContent = async ({header, images}) => {
-    const formData = new FormData();
-
-    formData.append('header', header || '')
-
-    for(let key in images){
-        formData.append(key, images[key])
-    }
-
+export const UpdateContent = async (formData) => {
     try{
         let response = await CallApi({
             endpoint: `content`, 

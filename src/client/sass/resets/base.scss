@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Signika');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300');
 
 * {
@@ -8,8 +8,9 @@
 }
 
 p, a, h3, h2, h1, input, span, textarea {
-    font-family: 'Signika', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 18px;
+    font-weight: 400;
 
     &:active, &:hover, &:focus, &:invalid{
         outline: none;
