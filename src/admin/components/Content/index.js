@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { GetContent, UpdateContent } from '../../util'
 import { Markdown } from 'react-showdown'
+import Navigation from '../Navigation'
 
 const UpdateContentComponent = ({ history }) => {
     const [page, setPage] = useState()
@@ -82,6 +83,7 @@ const UpdateContentComponent = ({ history }) => {
                 </div>
             </nav>
             <form id="add-product-form" onSubmit={onFormSubmit}>
+                    <Navigation/>
                 {
                     page &&
                     Object.keys(page.data).map(_ => {
