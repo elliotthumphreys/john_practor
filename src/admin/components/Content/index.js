@@ -4,7 +4,7 @@ import { Markdown } from 'react-showdown'
 import Navigation from '../Navigation'
 
 const UpdateContentComponent = ({ history }) => {
-    const [navigation, setNavigation] = useState([])
+    const [navigation, setNavigation] = useState()
     const [page, setPage] = useState()
     const [pages, setPages] = useState([])
     const [images, setImages] = useState({})
@@ -86,7 +86,7 @@ const UpdateContentComponent = ({ history }) => {
                 </div>
             </nav>
             <form id="add-product-form" onSubmit={onFormSubmit}>
-                    <Navigation navOptions={navigation}/>
+                {navigation && <Navigation navOptions={navigation}/>}
                 {
                     page &&
                     Object.keys(page.data).map(_ => {

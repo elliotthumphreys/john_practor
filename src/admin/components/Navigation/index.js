@@ -1,7 +1,7 @@
-import React, { useState, Fragment, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const Navigation = ({ navOptions }) => {
-    const [initNavOptions] = useState(navOptions)
+    const [navJSON, setNavJSON] = useState(navOptions)
 
     const navJSX = (key, label, slug) => <div className="nav" key={key}>
         <label>
@@ -14,24 +14,20 @@ const Navigation = ({ navOptions }) => {
         </label>
     </div>
 
-    const getNavJSX = (options) => options.map((option, key) => navJSX(key, option.name, option.slug))
-
-    const [nav, setNav] = useState(getNavJSX(initNavOptions))
-
-    useEffect(
-        () => {
-            if (navOptions !== initNavOptions) {
-                setNav(getNavJSX(navOptions))
-            }
-        }, [navOptions]
-    )
+    const [nav, setNav] = useState(navOptions.map((option, key) => navJSX(key, option.name, option.slug)))
 
     return <section className="navContianer">
         <label>
             Navigation
         </label>
         {nav}
-        <button className="add-more" onClick={() => setNav([...nav, navJSX(nav.length - 1)])} >Add more<span className="fas fa-plus-circle" /></button>
+        <button className="add-more" onClick={() => {
+            setNav([...nav, navJSX(nav.length)])
+            setNavJSON([...navJSON, {
+                name: '',
+                slug: ''
+            }])
+            }} >Add more <span className="fas fa-plus-circle" /></button>
     </section>
 }
 
