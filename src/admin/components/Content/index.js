@@ -4,6 +4,7 @@ import { Markdown } from 'react-showdown'
 import Navigation from '../Navigation'
 
 const UpdateContentComponent = ({ history }) => {
+    const [navigation, setNavigation] = useState([])
     const [page, setPage] = useState()
     const [pages, setPages] = useState([])
     const [images, setImages] = useState({})
@@ -17,6 +18,8 @@ const UpdateContentComponent = ({ history }) => {
         if (result.authenticated) {
             setPages(result.content[0].data.pages)
             setPage(result.content[0].data.pages[0])
+            console.log(result)
+            setNavigation(result.content[0].data.navigation)
         } else {
             history.push({ pathname: '/admin/login' })
         }
@@ -73,17 +76,17 @@ const UpdateContentComponent = ({ history }) => {
     return (
         <div className="add">
             <nav>
-                <a onClick={() => history.push({ pathname: `/admin/add` })}><span className="fas fa-edit"></span> Add</a>
-                <a onClick={() => history.push({ pathname: `/admin/view-all` })}><span className="fas fa-plus-circle"></span> View All</a>
+                <a key="0.1" onClick={() => history.push({ pathname: `/admin/add` })}><span className="fas fa-edit"></span> Add</a>
+                <a key="0.2" onClick={() => history.push({ pathname: `/admin/view-all` })}><span className="fas fa-plus-circle"></span> View All</a>
 
                 <div className="page-navigation">
                     {
-                        pages.map(_ => <a href='#' onClick={() => setPage(_)} className={page && _.slug === page.slug ? 'active' : ''} >{_.name}</a>)
+                        pages.map((_, key) => <a key={key} href='#' onClick={() => setPage(_)} className={page && _.slug === page.slug ? 'active' : ''} >{_.name}</a>)
                     }
                 </div>
             </nav>
             <form id="add-product-form" onSubmit={onFormSubmit}>
-                    <Navigation/>
+                    <Navigation navOptions={navigation}/>
                 {
                     page &&
                     Object.keys(page.data).map(_ => {

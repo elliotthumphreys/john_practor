@@ -1,0 +1,28 @@
+form > .navContianer {
+    width: 66%;
+    text-align: right;
+    > label:first-child{
+        text-align: left;
+        margin-bottom: 0;
+    }
+    > .nav {
+        width: 100%;
+        > label {
+            display: inline-block;
+            width: 50%;
+            margin-bottom: 0.5em;
+            font-size: 0.9em;
+            font-style: italic;
+            > input {
+                width: 99%;
+            }
+        }
+    }
+    > button.add-more {
+        min-width: 0%;
+        margin-bottom: 2em;
+        span {
+            padding-left: 0.5em;
+        }
+    }
+}

@@ -73,7 +73,7 @@
 
       input,
       textarea {
-        width: 50%;
+        width: 66%;
         font-size: 1.1em;
         display: block;
         padding: 5px 4px 4px;
@@ -95,7 +95,7 @@
       }
     }
 
-    button[type="submit"] {
+    button[type="submit"], button.add-more {
       font-size: 1.1em;
       background-color: #00823b;
       position: relative;
@@ -195,7 +195,7 @@
 
 .form-fail,
 .form-success {
-  width: 50%;
+  width: 66%;
   &.form-fail {
     border: 5px solid #b10e1e;
   }
