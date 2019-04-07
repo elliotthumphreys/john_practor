@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { GetHats, GetContent } from '../../util'
+import { GetHats } from '../../util'
 import ProductCard from './ProductCard'
 import Masonry from './Masonry';
 import Header from '../Header';
@@ -7,8 +7,7 @@ import Footer from '../Footer';
 
 import "../../sass/main.scss"
 
-const Collection = ({ history }) => {
-    const [content, setContent] = useState()
+const Collection = ({ history, match, nav, content, header }) => {
     const [hats, setHats] = useState([])
 
     const getHatsAsync = async () => {
@@ -16,14 +15,6 @@ const Collection = ({ history }) => {
 
         if (success) {
             setHats(hats)
-        }
-    }
-
-    const getContentAsync = async () => {
-        const { success, content } = await GetContent()
-
-        if (success) {
-            setContent(content.pages.find(_ => _.slug === 'home').data)
         }
     }
 
@@ -43,16 +34,16 @@ const Collection = ({ history }) => {
     }
 
     useEffect(() => {
-        getContentAsync()
         getHatsAsync()
     }, [])
 
     return (
         <div className="home">
             {content && <Header {...{
-                'header': content.header[0],
+                'header': header[0],
                 'coverImage': `http://localhost:4000/images/${content.images.filter(_ => _.id === 'coverImage')[0].path}`,
-                'pageTitle': 'Collection'
+                'nav': nav,
+                'currentPage': match.path
             }}
             />}
             <Masonry configuration={masonryConfiguration}>

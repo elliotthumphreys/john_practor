@@ -89,7 +89,7 @@ const UpdateContentComponent = ({ history }) => {
                     setNavigation(newValue)
                     setIsSuccessful(undefined)
                 }} />}
-                {page &&
+                {page && page.data &&
                     Object.keys(page.data).map(_ => {
                         if (_ === 'images') {
                             return page.data.images.map((image, index) => <Fragment key={index}>

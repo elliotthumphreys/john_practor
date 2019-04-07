@@ -10,8 +10,12 @@ const Header = ({ header, coverImage, pageTitle, nav = [], currentPage }) => {
         <Fragment>
             
             <SectionWithBackground className="home-banner-container">
-                <h1>{header}</h1>
-               
+                <header>
+                    <h1>
+                        <span>{header[0]}</span>
+                        <span>{header[1].split('').join(' ')}</span>
+                    </h1>
+                </header>
                 <nav>
                     {nav.map((_, key) => 
                         <Link key={key} to={`/${_.slug}`}>

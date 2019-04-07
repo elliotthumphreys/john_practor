@@ -1,4 +1,4 @@
-@mixin button($main, $hover, $padding){
+@mixin button($main, $hover, $padding, $shadow){
     font-size: 1.1em;
     background-color: $main;
     position: relative;
@@ -12,9 +12,9 @@
     outline: 1px solid transparent;
     outline-offset: -1px;
     -webkit-appearance: none;
-    -webkit-box-shadow: 0 2px 0 #003618;
-    -moz-box-shadow: 0 2px 0 #003618;
-    box-shadow: 0 2px 0 #003618;
+    -webkit-box-shadow: 0 2px 0 $shadow;
+    -moz-box-shadow: 0 2px 0 $shadow;
+    box-shadow: 0 2px 0 $shadow;
     line-height: 1.25;
     text-decoration: none;
     -webkit-font-smoothing: antialiased;
@@ -48,9 +48,9 @@
 }
 
 @mixin primary-button(){
-    @include button(#00823b, #00692f, 0.7em 0.9em 0.4em);
+    @include button(#00823b, #00692f, 0.7em 0.9em 0.4em, #003618);
 }
 
 @mixin secondary-button(){
-    @include button(#95a5a6, #636e72, 0.5em 0.7em 0.2em);
+    @include button(#95a5a6, #636e72, 0.5em 0.7em 0.2em, #2d3436);
 }

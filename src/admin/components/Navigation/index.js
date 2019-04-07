@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const Navigation = ({ navOptions, onChange }) => {
     const [navJSON, setNavJSON] = useState(navOptions)
 
     const onInputChange = (link, key) => {
         setNavJSON([...navJSON.slice(0, key), link, ...navJSON.slice(key + 1)])
-        onChange(navJSON)
     }
+
+    useEffect(() => {
+        onChange(navJSON)
+    }, [navJSON])
 
     const deleteLink = key => {
         setNavJSON([...navJSON.slice(0, key), ...navJSON.slice(key + 1)])
@@ -30,12 +33,12 @@ const Navigation = ({ navOptions, onChange }) => {
         {
             navJSON.map((link, key) => navJSX(link, key))
         }
-        <button className="add-more" onClick={() => {
+        <a className="add-more" onClick={() => {
             setNavJSON([...navJSON, {
                 name: '',
                 slug: ''
             }])
-        }} >Add more</button>
+        }} >Add more</a>
     </section>
 }
 
