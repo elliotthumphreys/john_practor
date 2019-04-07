@@ -17,8 +17,7 @@ const UpdateContentComponent = ({ history }) => {
 
         if (result.authenticated) {
             setPages(result.content[0].data.pages)
-            setPage(result.content[0].data.pages[0])
-            console.log(result)
+            setPage(result.content[0].data.pages.find(_ => _.name === 'Home'))
             setNavigation(result.content[0].data.navigation)
         } else {
             history.push({ pathname: '/admin/login' })
@@ -48,6 +47,8 @@ const UpdateContentComponent = ({ history }) => {
         for (let key in images) {
             formData.append(key, images[key])
         }
+
+        formData.append('navigation', JSON.stringify(navigation))
         // Create form multipart data end
 
         const { success, data } = await UpdateContent(formData)
@@ -76,19 +77,19 @@ const UpdateContentComponent = ({ history }) => {
     return (
         <div className="add">
             <nav>
-                <a key="0.1" onClick={() => history.push({ pathname: `/admin/add` })}><span className="fas fa-edit"></span> Add</a>
-                <a key="0.2" onClick={() => history.push({ pathname: `/admin/view-all` })}><span className="fas fa-plus-circle"></span> View All</a>
+                <a onClick={() => history.push({ pathname: `/admin/add` })}><span className="fas fa-edit"></span> Add</a>
+                <a onClick={() => history.push({ pathname: `/admin/view-all` })}><span className="fas fa-plus-circle"></span> View All</a>
 
                 <div className="page-navigation">
-                    {
-                        pages.map((_, key) => <a key={key} href='#' onClick={() => setPage(_)} className={page && _.slug === page.slug ? 'active' : ''} >{_.name}</a>)
-                    }
+                    {pages.map((_, key) => <a key={key} href='#' onClick={() => setPage(_)} className={page && _.slug === page.slug ? 'active' : ''} >{_.name}</a>)}
                 </div>
             </nav>
             <form id="add-product-form" onSubmit={onFormSubmit}>
-                {navigation && <Navigation navOptions={navigation}/>}
-                {
-                    page &&
+                {page && page.name == 'Home' && navigation && <Navigation navOptions={navigation} onChange={newValue => {
+                    setNavigation(newValue)
+                    setIsSuccessful(undefined)
+                }} />}
+                {page &&
                     Object.keys(page.data).map(_ => {
                         if (_ === 'images') {
                             return page.data.images.map((image, index) => <Fragment key={index}>
@@ -127,9 +128,7 @@ const UpdateContentComponent = ({ history }) => {
                             }
 
                         }
-                    })
-                }
-
+                    })}
 
                 {isSuccessful === true && <div className="form-success"><p>Content was updated successfully</p></div>}
                 {isSuccessful === false && <div className="form-fail"><p>Content was not updated, please try again</p></div>}

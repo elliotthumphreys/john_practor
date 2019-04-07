@@ -1,0 +1,56 @@
+@mixin button($main, $hover, $padding){
+    font-size: 1.1em;
+    background-color: $main;
+    position: relative;
+    display: -moz-inline-stack;
+    display: inline-block;
+    padding: $padding;
+    border: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    outline: 1px solid transparent;
+    outline-offset: -1px;
+    -webkit-appearance: none;
+    -webkit-box-shadow: 0 2px 0 #003618;
+    -moz-box-shadow: 0 2px 0 #003618;
+    box-shadow: 0 2px 0 #003618;
+    line-height: 1.25;
+    text-decoration: none;
+    -webkit-font-smoothing: antialiased;
+    cursor: pointer;
+    color: #fff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    vertical-align: top;
+    min-width: 30%;
+
+    &:disabled {
+      background-color: #6f777b;
+      cursor: default;
+
+      &:hover,
+      &:focus {
+        background-color: #6f777b;
+        outline: none;
+      }
+    }
+
+    &:hover,
+    &:focus {
+      background-color: $hover;
+    }
+
+    &:focus {
+      outline: 3px solid #ffbf47;
+    }
+}
+
+@mixin primary-button(){
+    @include button(#00823b, #00692f, 0.7em 0.9em 0.4em);
+}
+
+@mixin secondary-button(){
+    @include button(#95a5a6, #636e72, 0.5em 0.7em 0.2em);
+}

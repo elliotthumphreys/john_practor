@@ -72,8 +72,11 @@
       }
 
       input,
-      textarea {
+      textarea {  
         width: 66%;
+        @media #{$mobile, $tablet} {
+          width: 100%;
+        }
         font-size: 1.1em;
         display: block;
         padding: 5px 4px 4px;
@@ -95,53 +98,8 @@
       }
     }
 
-    button[type="submit"], button.add-more {
-      font-size: 1.1em;
-      background-color: #00823b;
-      position: relative;
-      display: -moz-inline-stack;
-      display: inline-block;
-      padding: 0.7em 0.9em 0.4em;
-      border: none;
-      -webkit-border-radius: 0;
-      -moz-border-radius: 0;
-      border-radius: 0;
-      outline: 1px solid transparent;
-      outline-offset: -1px;
-      -webkit-appearance: none;
-      -webkit-box-shadow: 0 2px 0 #003618;
-      -moz-box-shadow: 0 2px 0 #003618;
-      box-shadow: 0 2px 0 #003618;
-      line-height: 1.25;
-      text-decoration: none;
-      -webkit-font-smoothing: antialiased;
-      cursor: pointer;
-      color: #fff;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      vertical-align: top;
-      min-width: 30%;
-
-      &:disabled {
-        background-color: #6f777b;
-        cursor: default;
-
-        &:hover,
-        &:focus {
-          background-color: #6f777b;
-          outline: none;
-        }
-      }
-
-      &:hover,
-      &:focus {
-        background-color: #00692f;
-      }
-
-      &:focus {
-        outline: 3px solid #ffbf47;
-      }
+    button[type="submit"] {
+      @include primary-button();
 	}
 	
 	.imageContainer {
@@ -196,6 +154,9 @@
 .form-fail,
 .form-success {
   width: 66%;
+  @media #{$mobile, $tablet} {
+    width: 100%;
+  }
   &.form-fail {
     border: 5px solid #b10e1e;
   }
