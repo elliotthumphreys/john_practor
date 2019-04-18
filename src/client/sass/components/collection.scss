@@ -1,0 +1,8 @@
+.collection {
+    @extend .generic-page;
+
+
+    .body {
+        padding: 3em 0;
+    }
+}

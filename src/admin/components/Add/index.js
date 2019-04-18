@@ -53,11 +53,11 @@ const Add = ({ history, match }) => {
         setIsSuccessful(success)
 
         if (success) {
-            // setTitle('')
-            // setDescription('')
-            // setPrice('')
-            // setCategory('')
-            // setCredit('')
+            setTitle('')
+            setDescription('')
+            setPrice('')
+            setCategory('')
+            setCredit('')
             setImages([])
 
             //images is an uncontrolled input so have to do this to reset its fields

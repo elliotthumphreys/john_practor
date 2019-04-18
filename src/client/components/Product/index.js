@@ -1,36 +1,60 @@
-import React, { useState, useEffect, Fragment } from 'react'
-import { GetHat, GetContent } from '../../util'
+import React, { useState, useEffect, useContext } from 'react'
+import { Link } from 'react-router-dom'
+import Footer from '../Footer'
+import { SmallHeader as Header } from '../Header'
+import { Markdown } from 'react-showdown'
+import { HatsContext } from '../Context'
+import ImageGallery from 'react-image-gallery';
 
-const Product = ({ history }) => {
-    const [ content, setContent ] = useState({})
-    const [ hat, setHat ] = useState([])
+import { BaseImageUrl } from '../../../config.json'
 
-    const getHatAsync = async () => {
-        const { success, hat } = await GetHat()
+const Product = ({ history, match: { path, params: { id } } }) => {
+    const hat = useHat(id)
 
-        if(success){
-            setHat(hat)
-        }
-    }
+    const images = hat && hat.images.map(_ => {
+        return { original: `${BaseImageUrl}${_.path}`, thumbnail: `${BaseImageUrl}${_.path}` }
+    })
 
-    const getContentAsync = async () => {
-        const { success, content } = await GetContent()
+    return (
+        <section className='product-page'>
+            <Header currentPageSlug={path} />
+            {hat && <div className="body">
+                <nav>
+                    <Link to="/home">Home</Link>
+                    <span className="fas fa-chevron-right"></span>
+                    <Link to="/collection">Collection</Link>
+                    <span className="fas fa-chevron-right"></span>
+                    <Link to={`/collection/${hat.category}`}>{hat.category}</Link>
+                </nav>
+                <div className="image-container">
+                    <ImageGallery items={images}
+                        showFullscreenButton={false}
+                        showPlayButton={false} />
+                </div>
+                <p className="price">£{hat.price}</p>
+                <Markdown markdown={hat.description} />
+                <p className="credit">{hat.credit}</p>
+            </div>}
+            <Footer />
+        </section>
+    )
+}
 
-        if(success){
-            setContent(content)
-        }
+function useHat(id) {
+    const { getHat } = useContext(HatsContext)
+    const [hat, setHat] = useState()
+
+    const callContext = async () => {
+        const response = await getHat(id)
+
+        setHat(response)
     }
 
     useEffect(() => {
-        getContentAsync()
-        getHatAsync()
-    }, [])
+        callContext()
+    })
 
-    return (
-        <Fragment>
-            <h1>Prodcut page</h1>
-        </Fragment>
-    )
+    return hat
 }
 
 export default Product

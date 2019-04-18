@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Header from '../Header';
+import {ContentContext} from '../Context'
 
-const Home = ({content, nav, match}) => {
-    console.log(nav)
+
+const Home = ({match}) => {
+    const {home, navigation} = useContext(ContentContext)
+
     return <div className="home">
-        {content && <Header {...{
-            'header': [content['header-top'][0], content['header-bottom'][0]],
-            'coverImage': `http://localhost:4000/images/${content.images.filter(_ => _.id === 'coverImage')[0].path}`,
-            'nav': nav,
+        <Header {...{
+            'header': [home['header-top'][0], home['header-bottom'][0]],
+            'coverImage': `http://localhost:4000/images/${home.images.filter(_ => _.id === 'coverImage')[0].path}`,
+            'nav': navigation,
             'currentPage': match.path
-        }} />}
+        }} />
     </div>
 }
 

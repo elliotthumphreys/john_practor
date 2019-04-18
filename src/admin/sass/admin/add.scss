@@ -182,7 +182,16 @@
   margin-bottom: 30px;
   border-left: solid black;
   padding-left: 1em;
+    p, a, h3, h2, h1, span, input, textarea {
+      font-family: 'Open Sans Condensed', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
 
+      &:active, &:hover, &:focus, &:invalid{
+          outline: none;
+          box-shadow: none;
+      }
+  }
   h1{
     font-size: 2em
   }

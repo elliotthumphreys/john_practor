@@ -234,6 +234,8 @@ export const UpdateContent = async (formData) => {
 
         const { message, content } = await response.json()
 
+        console.log(message, JSON.stringify(content))
+
         return {
             success: message == 'success',
             data: content.data

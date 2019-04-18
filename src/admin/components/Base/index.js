@@ -4,11 +4,12 @@ import Login from "../Login"
 import ViewAll from "../ViewAll"
 import Add from "../Add"
 import UpdateContent from "../Content"
+
 import "../../sass/main.scss"
 
 const AdminBase = ({ match: { path } }) => {
     return (
-        <Switch>
+        <Switch className="admin">
             <Route path={`${path}/view-all`} component={ViewAll} />
             <Route path={`${path}/add`} component={Add} />
             <Route path={`${path}/update/:id`} component={Add} />

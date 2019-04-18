@@ -1,24 +1,50 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300");
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
 }
 
-p, a, h3, h2, h1, input, span, textarea {
-    font-family: 'Open Sans Condensed', sans-serif;
+.generic-page,
+.home,
+.product-card {
+  p,
+  a,
+  h3,
+  h2,
+  h1,
+  span,
+  input,
+  textarea,
+  li {
+    font-family: "Open Sans Condensed", sans-serif;
     font-size: 18px;
     font-weight: 400;
 
-    &:active, &:hover, &:focus, &:invalid{
-        outline: none;
-        box-shadow: none;
+    &:active,
+    &:hover,
+    &:focus,
+    &:invalid {
+      outline: none;
+      box-shadow: none;
     }
+  }
+  span:before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 600;
+  }
 }
 
-body, .adminBase{
-    width: 100%;
-    min-height: 100vh;
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
 }

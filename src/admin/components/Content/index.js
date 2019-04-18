@@ -70,6 +70,8 @@ const UpdateContentComponent = ({ history }) => {
     const onChange = (name, value) => {
         let pageCopy = { ...page }
         pageCopy.data[name][0] = value
+
+        console.log(pageCopy)
         setPage(pageCopy)
         setIsSuccessful(undefined)
     }

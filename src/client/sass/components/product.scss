@@ -1,0 +1,58 @@
+@import "node_modules/react-image-gallery/styles/scss/image-gallery.scss";
+.product-page {
+  @extend .generic-page;
+  > .body {
+    padding: 2.5em 1em 0;
+    .image-container {
+      width: 66%;
+      float: left;
+      padding: 0 1em 1em 0;
+      @media #{$mobile, $tablet} {
+        width: 100%;
+        padding: 0 0 1em;
+      }
+
+      a.image-gallery-thumbnail {
+        padding-bottom: 0;
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+
+    h1,
+    h2,
+    h3 {
+      padding-bottom: 0.1em;
+    }
+
+    ol,
+    ul {
+      display: inline-block;
+      padding-left: 1em;
+    }
+
+    nav {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 0.2em;
+      a,
+      span {
+        color: #636e72;
+        text-decoration: none;
+        padding: 0 0.2em;
+        text-transform: lowercase;
+      }
+      a:hover {
+        color: black;
+        cursor: pointer;
+      }
+      span {
+        margin: 0 0.2em;
+        font-size: 0.6em;
+      }
+    }
+  }
+}
