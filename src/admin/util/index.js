@@ -1,3 +1,5 @@
+import config from '../../config.json'
+
 const CreateTokenCookie = (token, days) => {
     var expires = "";
     if (days) {
@@ -27,7 +29,7 @@ const CallApi = async ({endpoint, body, method, useHeaders, headers, useToken = 
         payload.headers = {...payload.headers, Authorization: `Bearer ${token}`}
     }
 
-    return await fetch(`http://localhost:4000/${endpoint}`, payload)
+    return await fetch(`${config.ApiURL}${endpoint}`, payload)
 }
 
 export const AuthenticateUser = async (username, password) => {

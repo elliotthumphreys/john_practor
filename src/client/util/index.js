@@ -1,4 +1,6 @@
 import "isomorphic-fetch"
+import config from '../../config.json'
+
 
 const CallApi = async ({ endpoint, body, method, useHeaders, headers }) => {
     let payload = {
@@ -14,7 +16,7 @@ const CallApi = async ({ endpoint, body, method, useHeaders, headers }) => {
         payload.body = body
     }
 
-    return await fetch(`http://localhost:4000/${endpoint}`, payload)
+    return await fetch(`${config.ApiURL}${endpoint}`, payload)
 }
 
 export const GetHats = async () => {
