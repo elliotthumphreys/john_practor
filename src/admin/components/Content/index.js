@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react'
 import { GetContent, UpdateContent } from '../../util'
 import { Markdown } from 'react-showdown'
 import Navigation from '../Navigation'
+import config from '../../../config.json'
 
 const UpdateContentComponent = ({ history }) => {
     const [navigation, setNavigation] = useState()
@@ -105,7 +106,7 @@ const UpdateContentComponent = ({ history }) => {
                                 {!images.hasOwnProperty(image.id) &&
                                     <div className='imageContainer'>
                                         <div className='image'>
-                                            <img src={`http://localhost:4000/images/${image.path}`} />
+                                            <img src={`${config.BaseImageUrl}${image.path}`} />
                                         </div>
                                     </div>}
                             </Fragment>)

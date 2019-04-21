@@ -1,16 +1,25 @@
 {
-  "name": "john_practor",
-  "version": "1.0.0",
+  "name": "john_proctor_app",
+  "version": "2.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development",
     "start:prod": "webpack-dev-server --mode production",
-    "stats": "webpack --profile --json --mode production > stats.json && webpack-bundle-analyzer ./stats.json"
+    "stats": "webpack --profile --json --mode production > stats.json && webpack-bundle-analyzer ./stats.json",
+    "build": "webpack --mode production --config ./webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElliottJH/john_practor.git"
   },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ElliottJH/john_practor/issues"
+  },
+  "homepage": "https://github.com/ElliottJH/john_practor#readme",
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
@@ -23,18 +32,17 @@
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "uglifyjs-webpack-plugin": "^2.1.2",
     "webpack": "^4.29.6",
     "webpack-bundle-analyzer": "^3.1.0",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
-    "es6-promise": "^4.2.6",
     "isomorphic-fetch": "^2.2.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-image-gallery": "^0.8.16",
-    "react-masonry-component": "^6.2.1",
     "react-router-dom": "^4.3.1",
     "react-showdown": "^1.6.0",
     "styled-components": "^4.1.3"

@@ -1,9 +1,10 @@
 const path = require("path");
 const webpack = require("webpack");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
   entry: ['babel-polyfill', "./src/index.js"],
-  mode: "development",
+  mode: "production",
   module: {
     rules: [
       {
@@ -34,6 +35,7 @@ module.exports = {
     publicPath: "/dist/",
     filename: "bundle.js"
   },
+  devtool: '',
   devServer: {
     disableHostCheck: true,
     contentBase: path.join(__dirname, "public/"),
@@ -42,7 +44,22 @@ module.exports = {
     hotOnly: true,
     historyApiFallback: true
   },
+  optimization: {
+    minimizer: [new UglifyJsPlugin()],
+    namedModules: false,
+    namedChunks: false,
+    nodeEnv: 'production',
+    flagIncludedChunks: true,
+    occurrenceOrder: true,
+    sideEffects: true,
+    usedExports: true,
+    concatenateModules: true,
+    noEmitOnErrors: true,
+    checkWasmTypes: true,
+    minimize: true,
+  },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.ModuleConcatenationPlugin()
   ]
 };

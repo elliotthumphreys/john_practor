@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Markdown } from 'react-showdown'
 import { CreateHat, GetHat, UpdateHat, CheckTokenAuthentication } from '../../util'
+import config from '../../../config.json'
 
 const Add = ({ history, match }) => {
     const [id, setId] = useState()
@@ -173,7 +174,7 @@ const Add = ({ history, match }) => {
                                     :
                                     <button type="button" className='add-button' onClick={() => deleteImageOnClick(images._id)}>add image</button>
                                 }
-                                <img src={`http://localhost:4000/images/${images.path}`} />
+                                <img src={`${config.BaseImageUrl}${images.path}`} />
                             </div>
                         ))}
                     </div>

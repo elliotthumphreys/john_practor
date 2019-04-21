@@ -4,29 +4,30 @@ const CreateTokenCookie = (token, days) => {
     var expires = "";
     if (days) {
         var date = new Date();
-        date.setTime(date.getTime() + (days*24*60*60*1000));
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
         expires = "; expires=" + date.toUTCString();
     }
-    document.cookie = "jwt=" + token  + expires + "; path=/";
+    document.cookie = "jwt=" + token + expires + "; path=/";
 }
 
-const CallApi = async ({endpoint, body, method, useHeaders, headers, useToken = true}) => {
+const CallApi = async ({ endpoint, body, method, useHeaders, headers, useToken = true }) => {
     let payload = {
         headers: useHeaders && {
             'Accept': 'application/json',
-            'Content-Type': 'application/json', 
-            ...headers},
+            'Content-Type': 'application/json',
+            ...headers
+        },
         method
     }
 
-    if(body){
+    if (body) {
         payload.body = body
     }
 
-    if(useToken){
-        let token = document.cookie.split(';').find(cookie => cookie.split('=')[0] =='jwt')
-        token = token? token.split('=')[1] : ''
-        payload.headers = {...payload.headers, Authorization: `Bearer ${token}`}
+    if (useToken) {
+        let token = document.cookie.split(';').find(cookie => cookie.split('=')[0] == 'jwt')
+        token = token ? token.split('=')[1] : ''
+        payload.headers = { ...payload.headers, Authorization: `Bearer ${token}` }
     }
 
     return await fetch(`${config.ApiURL}${endpoint}`, payload)
@@ -35,16 +36,16 @@ const CallApi = async ({endpoint, body, method, useHeaders, headers, useToken = 
 export const AuthenticateUser = async (username, password) => {
     let response, responseObject
 
-    try{
+    try {
         response = await CallApi({
-            endpoint: 'users/authenticate', 
-            body: JSON.stringify({ username, password }), 
+            endpoint: 'users/authenticate',
+            body: JSON.stringify({ username, password }),
             useHeaders: true,
-            method: 'POST', 
+            method: 'POST',
             useToken: false
         })
         responseObject = await response.json()
-    }catch(error){
+    } catch (error) {
         return {
             authenticated: false,
             token: null,
@@ -62,19 +63,19 @@ export const AuthenticateUser = async (username, password) => {
 }
 
 export const CheckTokenAuthentication = async () => {
-    try{
+    try {
         const response = await CallApi({
-            endpoint: 'users/authenticate-token', 
+            endpoint: 'users/authenticate-token',
             method: 'GET',
             useHeaders: true
         })
 
         const { authenticated } = await response.json()
-        
+
         return {
-            authenticated: authenticated || false 
+            authenticated: authenticated || false
         }
-    }catch(error){
+    } catch (error) {
         return {
             authenticated: false
         }
@@ -82,29 +83,29 @@ export const CheckTokenAuthentication = async () => {
 }
 
 export const GetHats = async () => {
-    try{
+    try {
         const response = await CallApi({
-            endpoint: 'hats/', 
+            endpoint: 'hats/',
             method: 'GET'
         })
         const hats = await response.json()
-        
+
         return {
             authenticated: true,
             hats
         }
-    }catch(error){
+    } catch (error) {
         return {
-            authenticated: false, 
+            authenticated: false,
             hats: []
         }
     }
 }
 
 export const GetHat = async id => {
-    try{
+    try {
         const response = await CallApi({
-            endpoint: `hats/${id}`, 
+            endpoint: `hats/${id}`,
             method: 'GET'
         })
         const hat = await response.json()
@@ -113,7 +114,7 @@ export const GetHat = async id => {
             authenticated: true,
             hat
         }
-    }catch(error){
+    } catch (error) {
         return {
             authenticated: false,
             hat: {}
@@ -122,9 +123,9 @@ export const GetHat = async id => {
 }
 
 export const GetContent = async () => {
-    try{
+    try {
         const response = await CallApi({
-            endpoint: `content/`, 
+            endpoint: `content/`,
             method: 'GET'
         })
         const content = await response.json()
@@ -133,7 +134,7 @@ export const GetContent = async () => {
             authenticated: true,
             content
         }
-    }catch(error){
+    } catch (error) {
         return {
             authenticated: false,
             content: {}
@@ -142,25 +143,25 @@ export const GetContent = async () => {
 }
 
 export const DeleteHat = async id => {
-    try{
+    try {
         const response = await CallApi({
-            endpoint:`hats/${id}`, 
+            endpoint: `hats/${id}`,
             method: 'DELETE'
         })
         const json = await response.json()
-        
+
         return {
             response: 'success'
         }
-    }catch(error){
+    } catch (error) {
         return {
-            authenticated: false, 
+            authenticated: false,
             response: ''
         }
     }
 }
 
-export const CreateHat = async ({title, description, price, category, credit, images}) => {
+export const CreateHat = async ({ title, description, price, category, credit, images }) => {
     const formData = new FormData();
 
     formData.append('title', title)
@@ -169,30 +170,31 @@ export const CreateHat = async ({title, description, price, category, credit, im
     formData.append('category', category)
     formData.append('credit', credit)
 
-    for(let i = 0; i < images.length; i++){
+    for (let i = 0; i < images.length; i++) {
         formData.append('images', images[i])
     }
 
-    try{
+    try {
         let response = await CallApi({
-            endpoint: 'hats/add', 
+            endpoint: 'hats/add',
             body: formData,
-            useHeaders: false,  
-            method: 'POST'})
+            useHeaders: false,
+            method: 'POST'
+        })
 
         response = await response.json()
 
         return {
             success: response.message == 'success'
         }
-    }catch(error){
+    } catch (error) {
         return {
             success: false
         }
     }
 }
 
-export const UpdateHat = async ({id, title, description, price, category, credit, deletedImages, images}) => {
+export const UpdateHat = async ({ id, title, description, price, category, credit, deletedImages, images }) => {
     const formData = new FormData();
 
     formData.append('title', title || '')
@@ -202,16 +204,17 @@ export const UpdateHat = async ({id, title, description, price, category, credit
     formData.append('credit', credit || '')
     formData.append('deletedImages', deletedImages || [])
 
-    for(let i = 0; i < images.length; i++){
+    for (let i = 0; i < images.length; i++) {
         formData.append('images', images[i])
     }
 
-    try{
+    try {
         let response = await CallApi({
-            endpoint: `hats/${id}`, 
+            endpoint: `hats/${id}`,
             body: formData,
-            useHeaders: false,  
-            method: 'PUT'})
+            useHeaders: false,
+            method: 'PUT'
+        })
 
         const { message, hat } = await response.json()
 
@@ -219,7 +222,7 @@ export const UpdateHat = async ({id, title, description, price, category, credit
             success: message == 'success',
             hat: hat
         }
-    }catch(error){
+    } catch (error) {
         return {
             success: false
         }
@@ -227,12 +230,13 @@ export const UpdateHat = async ({id, title, description, price, category, credit
 }
 
 export const UpdateContent = async (formData) => {
-    try{
+    try {
         let response = await CallApi({
-            endpoint: `content`, 
+            endpoint: `content`,
             body: formData,
-            useHeaders: false,  
-            method: 'PUT'})
+            useHeaders: false,
+            method: 'PUT'
+        })
 
         const { message, content } = await response.json()
 
@@ -242,7 +246,7 @@ export const UpdateContent = async (formData) => {
             success: message == 'success',
             data: content.data
         }
-    }catch(error){
+    } catch (error) {
         return {
             success: false
         }

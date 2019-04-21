@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { GetHats, DeleteHat, CheckTokenAuthentication } from '../../util'
 
+import { BaseImageUrl } from '../../../config.json'
+
 const ViewAll = ({ history }) => {
-    const [ hats, setHats ] = useState([])
+    const [hats, setHats] = useState([])
 
     const checkAuthentication = async () => {
         const { authenticated } = await CheckTokenAuthentication()
@@ -23,7 +25,7 @@ const ViewAll = ({ history }) => {
 
         if (response === 'success') {
             setHats(hats.map(hat => {
-                if(hat._id === id){
+                if (hat._id === id) {
                     hat.className = 'removed'
                 }
                 return hat
@@ -59,7 +61,7 @@ const ViewAll = ({ history }) => {
                         <p>{hat.credit}</p>
                         <p>{displayDate}</p>
                         <div>
-                            {hat.images.map((image, key) => <img key={key} src={`http://localhost:4000/images/${image.path}`} rel={image.description} />)}
+                            {hat.images.map((image, key) => <img key={key} src={`${BaseImageUrl}${image.path}`} rel={image.description} />)}
                         </div>
                     </div>
                 }

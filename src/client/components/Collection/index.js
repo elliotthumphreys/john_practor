@@ -8,6 +8,8 @@ import Select from './Select'
 
 import "../../sass/main.scss"
 
+import { BaseImageUrl } from '../../../config.json'
+
 const CONFIGURATION = {
     className: 'masonry',
     gap: '1px',
@@ -44,7 +46,7 @@ const Collection = ({ history, match: { url, params: { category } } }) => {
                         })
                         .map(({ id, price, images }, index) => <ProductCard
                             id={id}
-                            path={`http://localhost:4000/images/${images[0].path}`}
+                            path={`${BaseImageUrl}${images[0].path}`}
                             history={history}
                             price={price}
                             isSold={index % 3 === 0}
