@@ -67,8 +67,7 @@ const Add = ({ history, match }) => {
     }
 
     const update = async () => {
-        const { success, hat } = await UpdateHat({
-            id,
+        const { success, hat } = await UpdateHat(id, {
             title,
             description,
             price,

@@ -10,7 +10,7 @@ const Footer = () => {
             <a><span className='fab fa-pinterest'></span></a>
             <a><span className='fab fa-youtube'></span></a>
         </nav>
-        <p>&copy; {(new Date()).getFullYear()} John Practor Millinary</p>
+        <p>&copy; {(new Date()).getFullYear()} John Proctor Millinery</p>
     </footer>
 
 }

@@ -8,7 +8,7 @@ const UpdateContentComponent = ({ history }) => {
     const [navigation, setNavigation] = useState()
     const [page, setPage] = useState()
     const [pages, setPages] = useState([])
-    const [images, setImages] = useState({})
+    const [images, setImages] = useState([])
 
     const [isSuccessful, setIsSuccessful] = useState()
     const [isLoading, setIsLoading] = useState(false)
@@ -34,32 +34,19 @@ const UpdateContentComponent = ({ history }) => {
 
         setIsLoading(true)
 
-        // Create form multipart data start
-        const formData = new FormData();
-
-        formData.append('slug', page.slug)
-
-        for (let key in page.data) {
-            if (key !== 'images') {
-                formData.append(key, page.data[key][0])
-            }
+        let formData = {
+            page,
+            navigation
         }
 
-        for (let key in images) {
-            formData.append(key, images[key])
-        }
-
-        formData.append('navigation', JSON.stringify(navigation))
-        // Create form multipart data end
-
-        const { success, data } = await UpdateContent(formData)
+        const { success, data } = await UpdateContent(formData, images)
 
         if (success) {
             setPages(data.pages)
             setPage(data.pages.find(_ => page.slug === _.slug))
             setImages([])
 
-            //images is an uncontrolled input so have to do this to reset its fields
+            //image upload has uncontrolled upload so have to do this to reset it
             document.getElementById("add-product-form").reset();
         }
 
@@ -72,8 +59,30 @@ const UpdateContentComponent = ({ history }) => {
         let pageCopy = { ...page }
         pageCopy.data[name][0] = value
 
-        console.log(pageCopy)
         setPage(pageCopy)
+        setIsSuccessful(undefined)
+    }
+
+    const onImageChange = (id, file) => {
+        setIsLoading(true)
+
+        let pageCopy = { ...page }
+        for (let index = 0; index < pageCopy.data.images.length; index++) {
+            if (pageCopy.data.images[index].id === id) {
+
+                pageCopy.data.images[index].mimeType = file.type
+
+                setImages([...images, {
+                    id,
+                    file, 
+                    mimeType: file.type
+                }])
+
+                setPage(pageCopy)
+                setIsLoading(false)
+            }
+        }
+
         setIsSuccessful(undefined)
     }
 
@@ -84,7 +93,12 @@ const UpdateContentComponent = ({ history }) => {
                 <a onClick={() => history.push({ pathname: `/admin/view-all` })}><span className="fas fa-plus-circle"></span> View All</a>
 
                 <div className="page-navigation">
-                    {pages.map((_, key) => <a key={key} href='#' onClick={() => setPage(_)} className={page && _.slug === page.slug ? 'active' : ''} >{_.name}</a>)}
+                    {pages.map((_, key) =>
+                        <a key={key}
+                            href='#'
+                            onClick={() => setPage(_)}
+                            className={page && _.slug === page.slug ? 'active' : ''} >{_.name}</a>
+                    )}
                 </div>
             </nav>
             <form id="add-product-form" onSubmit={onFormSubmit}>
@@ -98,17 +112,15 @@ const UpdateContentComponent = ({ history }) => {
                             return page.data.images.map((image, index) => <Fragment key={index}>
                                 <label className='low-margin'>
                                     {image.id.replace('Image', '').replace(/\b\w/g, l => l.toUpperCase())}
-                                    <input className="no-border" type="file" onChange={_ => {
-                                        setImages({ ...images, [image.id]: _.target.files[0] })
-                                    }} />
+                                    <input className="no-border" type="file" onChange={_ =>
+                                        onImageChange(image.id, _.target.files[0])
+                                    } />
                                 </label>
-
-                                {!images.hasOwnProperty(image.id) &&
-                                    <div className='imageContainer'>
-                                        <div className='image'>
-                                            <img src={`${config.BaseImageUrl}${image.path}`} />
-                                        </div>
-                                    </div>}
+                                <div className='imageContainer'>
+                                    <div className='image'>
+                                        <img src={`${config.BaseImageUrl}${image.path}`} />
+                                    </div>
+                                </div>
                             </Fragment>)
                         } else {
                             switch (page.data[_][1]) {

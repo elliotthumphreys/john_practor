@@ -1,4 +1,5 @@
 import config from '../../config.json'
+import { fileURLToPath } from 'url';
 
 const CreateTokenCookie = (token, days) => {
     var expires = "";
@@ -161,31 +162,27 @@ export const DeleteHat = async id => {
     }
 }
 
-export const CreateHat = async ({ title, description, price, category, credit, images }) => {
-    const formData = new FormData();
-
-    formData.append('title', title)
-    formData.append('description', description)
-    formData.append('price', price)
-    formData.append('category', category)
-    formData.append('credit', credit)
-
-    for (let i = 0; i < images.length; i++) {
-        formData.append('images', images[i])
-    }
+export const CreateHat = async data => {
+    let jsonData = { ...data, images: Array.from(data.images).map(image => image.type) }
 
     try {
-        let response = await CallApi({
-            endpoint: 'hats/add',
-            body: formData,
-            useHeaders: false,
-            method: 'POST'
-        })
+        let { success, hat, presignedUrls } = await submitData(`${config.ApiURL}hats`, jsonData)
 
-        response = await response.json()
+        if (success) {
+            let presignedImageUrls = presignedUrls.images
+
+            for (let index = 0; index < data.images.length; index++) {
+                const file = data.images[index], { url } = presignedImageUrls[index]
+
+                const imageUploadResponse = await uploadToS3(url, file)
+
+                success = success && imageUploadResponse
+            }
+        }
 
         return {
-            success: response.message == 'success'
+            success: success,
+            hat
         }
     } catch (error) {
         return {
@@ -194,34 +191,34 @@ export const CreateHat = async ({ title, description, price, category, credit, i
     }
 }
 
-export const UpdateHat = async ({ id, title, description, price, category, credit, deletedImages, images }) => {
-    const formData = new FormData();
-
-    formData.append('title', title || '')
-    formData.append('description', description || '')
-    formData.append('price', price || 0)
-    formData.append('category', category || '')
-    formData.append('credit', credit || '')
-    formData.append('deletedImages', deletedImages || [])
-
-    for (let i = 0; i < images.length; i++) {
-        formData.append('images', images[i])
+export const UpdateHat = async (id, data) => {
+    const jsonData = {
+        ...data,
+        images: Array.from(data.images).map(image => image.type)
     }
 
     try {
-        let response = await CallApi({
-            endpoint: `hats/${id}`,
-            body: formData,
-            useHeaders: false,
-            method: 'PUT'
-        })
+        let { success, hat, presignedUrls } = await submitData(`${config.ApiURL}hats/${id}`, jsonData, 'PUT')
 
-        const { message, hat } = await response.json()
+        console.log(success, hat, presignedUrls)
+
+        if (success) {
+            let presignedImageUrls = presignedUrls.images
+
+            for (let index = 0; index < data.images.length; index++) {
+                const file = data.images[index], { url } = presignedImageUrls[index]
+
+                const imageUploadResponse = await uploadToS3(url, file)
+
+                success = success && imageUploadResponse
+            }
+        }
 
         return {
-            success: message == 'success',
-            hat: hat
+            success,
+            hat
         }
+
     } catch (error) {
         return {
             success: false
@@ -229,26 +226,66 @@ export const UpdateHat = async ({ id, title, description, price, category, credi
     }
 }
 
-export const UpdateContent = async (formData) => {
-    try {
-        let response = await CallApi({
-            endpoint: `content`,
-            body: formData,
-            useHeaders: false,
-            method: 'PUT'
-        })
+export const UpdateContent = async (data, files) => {
+    console.log(data)
+    // try {
+    //     let { success, content, presignedUrls } = await submitData(`${config.ApiURL}content`, data, 'PUT')
 
-        const { message, content } = await response.json()
+    //     if (success) {
+    //         for (let index = 0; index < presignedUrls.length; index++) {
+    //             const { id, url } = presignedUrls[index]
+    //             const { file } = files.find(_ => _.id = id)
 
-        console.log(message, JSON.stringify(content))
+    //             const imageUploadResponse = await uploadToS3(url, file)
 
-        return {
-            success: message == 'success',
-            data: content.data
-        }
-    } catch (error) {
-        return {
-            success: false
-        }
-    }
+    //             success = success && imageUploadResponse
+    //         }
+    //     }
+
+    //     return {
+    //         success: success,
+    //         data: content.data
+    //     }
+    // } catch (error) {
+    //     return {
+    //         success: false
+    //     }
+    // }
+}
+
+async function submitData(url = '', data = {}, method = 'POST') {
+    let token = document.cookie.split(';').find(cookie => cookie.split('=')[0] == 'jwt')
+    token = token ? token.split('=')[1] : ''
+
+    // Default options are marked with *
+    return fetch(url, {
+        method, // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, cors, *same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+            // "Content-Type": "application/x-www-form-urlencoded",
+        },
+        redirect: "follow", // manual, *follow, error
+        referrer: "no-referrer", // no-referrer, *client
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+    }).then(response => {
+        console.log(response)
+        return response.json()
+    }); // parses JSON response into native Javascript objects 
+}
+
+async function uploadToS3(url = '', file) {
+    return fetch(url, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": file.type
+        },
+        body: file
+    }).then(_ => {
+        console.log(_)
+        return _.status === 200
+    })
 }

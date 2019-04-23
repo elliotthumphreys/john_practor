@@ -1,11 +1,25 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { ContentContext } from '../Context'
 
-const Header = ({ header, coverImage, pageTitle, nav = [], currentPage }) => {
+const Header = ({ header, desktopCoverImage, mobileCoverImage, pageTitle, nav = [], currentPage }) => {
+    const [url, setUrl] = useState('')
+
+    useEffect(() => {
+        const changeUrl = () => {
+            const imageUrl = window.innerWidth > window.innerHeight? desktopCoverImage : mobileCoverImage
+            setUrl(imageUrl)
+        }
+        changeUrl()
+
+        window.addEventListener('resize', changeUrl)
+
+        return () => window.removeEventListener('resize', changeUrl)
+    })
+
     const SectionWithBackground = styled.section`
-        background-image: url("${coverImage}");
+        background-image: url("${url}");
     `
     return (
         <Fragment>

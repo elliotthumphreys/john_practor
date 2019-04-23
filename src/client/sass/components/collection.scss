@@ -1,8 +1,14 @@
 .collection {
-    @extend .generic-page;
+  @extend .generic-page;
 
-
-    .body {
-        padding: 3em 0;
+  > .body > .filter {
+    > ul,
+    > ol {
+      display: block;
     }
+  }
+
+  .body {
+    padding: 3em 0.5em;
+  }
 }

@@ -10,7 +10,8 @@ const Home = ({ match }) => {
     return <div className="home">
         <Header {...{
             'header': [home['header-top'][0], home['header-bottom'][0]],
-            'coverImage': `${BaseImageUrl}${home.images.filter(_ => _.id === 'coverImage')[0].path}`,
+            'desktopCoverImage': `${BaseImageUrl}${home.images.filter(_ => _.id === 'desktopCoverImage')[0].path}`,
+            'mobileCoverImage': `${BaseImageUrl}${home.images.filter(_ => _.id === 'mobileCoverImage')[0].path}`,
             'nav': navigation,
             'currentPage': match.path
         }} />

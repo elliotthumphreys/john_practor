@@ -7,6 +7,20 @@
 
   .body {
     flex-grow: 1;
+    padding: 0 0.5em 3em;
+
+    img.cover {
+      width: 50%;
+      float: left;
+      padding-right: 1em;
+      padding-bottom: 1em;
+      @media #{$tablet, $mobile} {
+        width: 100%;
+        float: left;
+        padding-right: 0;
+        padding-bottom: 1em;
+      }
+    }
 
     ul,
     ol,
@@ -18,17 +32,25 @@
       padding-bottom: 0.5em;
     }
 
-    ul, ol{
-        padding-left: 3em;
+    ul,
+    ol {
+      padding-left: 1em;
+      display: inline-block;
     }
 
-    h1{ font-size:3em; }
-    h2{ font-size:2em; }
-    h3{ font-size:1.5em; }
+    h1 {
+      font-size: 3em;
+    }
+    h2 {
+      font-size: 2em;
+    }
+    h3 {
+      font-size: 1.5em;
+    }
   }
 
   .titleContiner {
-    padding: 3em 0 2.5em;
+    padding: 3em 0.5em 2.5em;
 
     h2 {
       display: block;
