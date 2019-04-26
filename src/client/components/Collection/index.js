@@ -27,7 +27,16 @@ const CONFIGURATION = {
 
 const Collection = ({ history, match: { url, params: { category } } }) => {
     const hats = useHats()
-    const [selectedCategory, setSelectedCategory] = useState()
+    const [selectedCategory, setSelectedCategory] = useState('')
+    const [filteredHats, setFilteredHats] = useState([])
+
+    useEffect(() => {
+        setFilteredHats(hats.filter(hat => !category || hat.category.toLowerCase() === category.toLowerCase()))
+    }, [hats, category])
+
+    useEffect(() => {
+        setFilteredHats(hats.filter(hat => selectedCategory.toLowerCase() === 'all' || hat.category.toLowerCase() === selectedCategory.toLowerCase()))
+    }, [selectedCategory])
 
     const categoryOptions = ['all', ...new Set(hats.map(_ => _.category))]
 
@@ -37,13 +46,7 @@ const Collection = ({ history, match: { url, params: { category } } }) => {
             <div className="body">
                 {!category && <Select options={categoryOptions} setCategory={setSelectedCategory} />}
                 <Masonry configuration={CONFIGURATION}>
-                    {hats
-                        .filter(hat => {
-                            if (!category && (!selectedCategory || selectedCategory === 'all')) {
-                                return true
-                            }
-                            return selectedCategory ? hat.category === selectedCategory : hat.category === category
-                        })
+                    {filteredHats
                         .map(({ id, price, images }, index) => <ProductCard
                             id={id}
                             path={`${BaseImageUrl}${images[0].path}`}
