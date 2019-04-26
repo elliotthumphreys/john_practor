@@ -15,12 +15,16 @@ const CONFIGURATION = {
     gap: '1px',
     columnOptions: [
         {
-            window: 500,
+            window: 680,
             columns: 4
         },
         {
-            window: 0,
+            window: 450,
             columns: 3
+        },
+        {
+            window: 0,
+            columns: 2
         }
     ]
 }
