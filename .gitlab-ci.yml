@@ -2,7 +2,7 @@ image: ruby:2.3
 
 variables:
   AWS_DEFAULT_REGION: eu-west-2
-  BUCKET_NAME: john-proctor-app
+  BUCKET_NAME: john-practor-millinery-app
 
 cache:
   paths:
@@ -11,6 +11,8 @@ cache:
 before_script:
   - pip install awscli
   - bundle install --path vendor
+  - npm install
+  - npm run build
 
 deploy:
   script: 
