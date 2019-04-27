@@ -35,7 +35,7 @@ const Header = ({ header, desktopCoverImage, mobileCoverImage, pageTitle, nav = 
                         {nav.map((_, key) =>
                             <Link key={key} to={`/${_.slug}`}>
                                 <span className={currentPage == `/${_.slug}` ? 'active' : ''}>
-                                    {console.log(currentPage, _.slug)}{_.name}
+                                    {_.name}
                                 </span>
                             </Link>)}
                     </div>
