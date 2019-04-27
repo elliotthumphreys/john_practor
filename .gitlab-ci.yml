@@ -1,4 +1,4 @@
-image: ruby:2.3
+image: python:latest
 
 variables:
   AWS_DEFAULT_REGION: eu-west-2
