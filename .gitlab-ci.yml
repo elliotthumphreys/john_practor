@@ -1,3 +1,5 @@
+image: nikolaik/python-nodejs:latest
+
 variables:
   BUCKET_NAME: john-practor-millinery-app
 
@@ -5,23 +7,20 @@ stages:
   - build
   - deploy
 
-cache:
-  paths:
-    - node-modules/
-    - vendor/
-
 build:
   stage: build
-  image: node:latest
   script:
     - npm install
     - npm run build
+  artifacts:
+    untracked: true
 
 deploy:
   stage: deploy
-  image: python:latest
+  dependencies: 
+    - build
   script: 
-    - pip awscli 
-    - aws s3 cp ./public/ s3://$BUCKET_NAME/ --recursive
+    - pip3 install awscli
+    - aws s3 sync ./public/ s3://$BUCKET_NAME
   only:
     - master
