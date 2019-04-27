@@ -10,14 +10,11 @@ cache:
 
 before_script:
   - pip install awscli
-  - bundle install --path vendor
   - npm install
   - npm run build
 
 deploy:
   script: 
-    - bundle exec dato dump
-    - bundle exec dato jekyll build
     - aws s3 cp ./public/ s3://$BUCKET_NAME/ --recursive
   only:
     - master
