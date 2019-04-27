@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ProductCard = ({ id, path, price, isSold, history: { push } }) => {
+const ProductCard = ({ id, path, history: { push } }) => {
     return (
         <div className="product-card">
             <a href='#' onClick={e => {
