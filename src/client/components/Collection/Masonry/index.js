@@ -10,11 +10,7 @@ const Masonry = ({ children, configuration: { gap, columnOptions, className } })
     `
 
     const setNumberOfColumns = () => {
-        let columns = columnOptions.filter(_ => {
-            if (window.innerWidth > _.window) {
-                return true
-            }
-        })[0].columns
+        let columns = columnOptions.filter(_ => window.innerWidth > _.window)[0].columns
 
         setColumn(columns)
     }
