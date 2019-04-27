@@ -1,21 +1,25 @@
-image: node:latest
-
 variables:
-  AWS_DEFAULT_REGION: eu-west-2
   BUCKET_NAME: john-practor-millinery-app
+
+stages:
+  - build
+  - deploy
 
 cache:
   paths:
     - node-modules/
     - vendor/
 
-before_script:
-  - npm install aws-cli --save-dev
-  - npm install
-  - npm run build
+build:
+  image: node:latest
+  script:
+    - npm install
+    - npm run build
 
 deploy:
+  image: python:latest
   script: 
+    - pip awscli 
     - aws s3 cp ./public/ s3://$BUCKET_NAME/ --recursive
   only:
     - master
