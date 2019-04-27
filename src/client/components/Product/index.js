@@ -8,7 +8,7 @@ import ImageGallery from 'react-image-gallery';
 
 import { BaseImageUrl } from '../../../config.json'
 
-const Product = ({ history, match: { path, params: { id } } }) => {
+const Product = ({ match: { path, params: { id } } }) => {
     const hat = useHat(id)
 
     const images = hat && hat.images.map(_ => {
