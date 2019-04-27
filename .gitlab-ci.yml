@@ -1,4 +1,4 @@
-image: python:latest
+image: node:latest
 
 variables:
   AWS_DEFAULT_REGION: eu-west-2
@@ -6,10 +6,11 @@ variables:
 
 cache:
   paths:
+    - node-modules/
     - vendor/
 
 before_script:
-  - pip install awscli
+  - npm install aws-cli --save-dev
   - npm install
   - npm run build
 
