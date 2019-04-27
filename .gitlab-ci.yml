@@ -11,12 +11,14 @@ cache:
     - vendor/
 
 build:
+  stage: build
   image: node:latest
   script:
     - npm install
     - npm run build
 
 deploy:
+  stage: deploy
   image: python:latest
   script: 
     - pip awscli 
