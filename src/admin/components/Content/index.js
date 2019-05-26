@@ -5,10 +5,8 @@ import Navigation from '../Navigation'
 import config from '../../../config.json'
 
 const UpdateContentComponent = ({ history }) => {
-    const [navigation, setNavigation] = useState()
-    const [page, setPage] = useState()
-    const [pages, setPages] = useState([])
-    const [images, setImages] = useState([])
+    const [editableContent, setEditableContent] = useState([])
+    const [currentContent, setCurrentContent] = useState()
 
     const [isSuccessful, setIsSuccessful] = useState()
     const [isLoading, setIsLoading] = useState(false)
@@ -16,10 +14,11 @@ const UpdateContentComponent = ({ history }) => {
     const getContent = async () => {
         const result = await GetContent()
 
+        console.log(result)
+
         if (result.authenticated) {
-            setPages(result.content[0].data.pages)
-            setPage(result.content[0].data.pages.find(_ => _.name === 'Home'))
-            setNavigation(result.content[0].data.navigation)
+            setEditableContent(result.content)
+            setCurrentContent(result.content.find(_ => _.slug === "home"))
         } else {
             history.push({ pathname: '/admin/login' })
         }
@@ -34,17 +33,10 @@ const UpdateContentComponent = ({ history }) => {
 
         setIsLoading(true)
 
-        let formData = {
-            page,
-            navigation
-        }
-
-        const { success, data } = await UpdateContent(formData, images)
+        const { success, data } = await UpdateContent(currentContent)
 
         if (success) {
-            setPages(data.pages)
-            setPage(data.pages.find(_ => page.slug === _.slug))
-            setImages([])
+            setCurrentContent(data)
 
             //image upload has uncontrolled upload so have to do this to reset it
             document.getElementById("add-product-form").reset();
@@ -55,33 +47,20 @@ const UpdateContentComponent = ({ history }) => {
         setIsLoading(false)
     }
 
-    const onChange = (name, value) => {
-        let pageCopy = { ...page }
-        pageCopy.data[name][0] = value
+    const onChange = (index, value) => {
+        let content = { ...currentContent }
+        content.data[index].value = value
 
-        setPage(pageCopy)
+        setCurrentContent(content)
         setIsSuccessful(undefined)
     }
 
-    const onImageChange = (id, file) => {
-        setIsLoading(true)
+    const onImageChange = (index, file) => {
+        let content = { ...currentContent }
 
-        let pageCopy = { ...page }
-        for (let index = 0; index < pageCopy.data.images.length; index++) {
-            if (pageCopy.data.images[index].id === id) {
+        content.data[index].file = file;
 
-                pageCopy.data.images[index].mimeType = file.type
-
-                setImages([...images, {
-                    id,
-                    file, 
-                    mimeType: file.type
-                }])
-
-                setPage(pageCopy)
-                setIsLoading(false)
-            }
-        }
+        setCurrentContent(content)
 
         setIsSuccessful(undefined)
     }
@@ -93,57 +72,76 @@ const UpdateContentComponent = ({ history }) => {
                 <a onClick={() => history.push({ pathname: `/admin/view-all` })}><span className="fas fa-plus-circle"></span> View All</a>
 
                 <div className="page-navigation">
-                    {pages.map((_, key) =>
-                        <a key={key}
+                    {editableContent.map((_, key) => {
+                        const className =
+                            currentContent && (
+                                (_.type === 'navigation' && currentContent.type === 'navigation') ||
+                                (_.type === 'social' && currentContent.type === 'social') ||
+                                (_.slug && _.slug === currentContent.slug)
+                            ) ? 'active' : '';
+                        const displayText =
+                            _.name ?
+                                _.name.charAt(0).toUpperCase() + _.name.slice(1) :
+                                _.type.charAt(0).toUpperCase() + _.type.slice(1)
+
+                        return <a key={key}
                             href='#'
-                            onClick={() => setPage(_)}
-                            className={page && _.slug === page.slug ? 'active' : ''} >{_.name}</a>
-                    )}
+                            onClick={() => setCurrentContent(_)}
+                            className={className}>{displayText}</a>
+                    })}
                 </div>
             </nav>
             <form id="add-product-form" onSubmit={onFormSubmit}>
-                {page && page.name == 'Home' && navigation && <Navigation navOptions={navigation} onChange={newValue => {
-                    setNavigation(newValue)
-                    setIsSuccessful(undefined)
-                }} />}
-                {page && page.data &&
-                    Object.keys(page.data).map(_ => {
-                        if (_ === 'images') {
-                            return page.data.images.map((image, index) => <Fragment key={index}>
-                                <label className='low-margin'>
-                                    {image.id.replace('Image', '').replace(/\b\w/g, l => l.toUpperCase())}
-                                    <input className="no-border" type="file" onChange={_ =>
-                                        onImageChange(image.id, _.target.files[0])
-                                    } />
+
+                {currentContent &&
+                    currentContent.type === 'navigation' &&
+                    <Navigation navOptions={currentContent.data} onChange={newValue => {
+                        let contentCopy = Object.assign({}, currentContent)
+                        contentCopy.data = newValue
+                        setCurrentContent(contentCopy)
+                        setIsSuccessful(undefined)
+                    }} />}
+
+                {currentContent &&
+                    currentContent.type !== 'navigation' &&
+                    currentContent.data.map(({ type, name, value }, index) => {
+                        const currentContentValue = currentContent.data[index].value;
+                        switch (type) {
+                            case 'text':
+                                return <label>
+                                    {name.replace(/\b\w/g, letter => letter.toUpperCase())}
+                                    <input type="text" onChange={event => onChange(index, event.target.value)} value={currentContentValue} />
                                 </label>
-                                <div className='imageContainer'>
-                                    <div className='image'>
-                                        <img src={`${config.BaseImageUrl}${image.path}`} />
-                                    </div>
-                                </div>
-                            </Fragment>)
-                        } else {
-                            switch (page.data[_][1]) {
-                                case 'text':
-                                    return <label>
-                                        {_.replace(/\b\w/g, l => l.toUpperCase())}
-                                        <input type="text" onChange={event => onChange(_, event.target.value)} value={page.data[_][0]} />
+                            case 'textarea':
+                                return <Fragment>
+                                    <label className='low-margin'>
+                                        {name.replace(/\b\w/g, letter => letter.toUpperCase())}
+                                        <textarea onChange={event => onChange(index, event.target.value)} value={currentContentValue} />
                                     </label>
-                                case 'textarea':
-                                    return <Fragment>
-                                        <label className='low-margin'>
-                                            {_.replace(/\b\w/g, l => l.toUpperCase())}
-                                            <textarea value={page.data[_][0]} onChange={event => onChange(_, event.target.value)} value={page.data[_][0]} />
-                                        </label>
 
-                                        <div className='descriptionPreview'>
-                                            <Markdown markup={page.data[_][0]} />
+                                    <div className='descriptionPreview'>
+                                        <Markdown markup={currentContentValue} />
+                                    </div>
+                                </Fragment>
+                            case 'image':
+                                return <Fragment>
+                                    <label className='low-margin'>
+                                        {name.replace('Image', '').replace(/\b\w/g, letter => letter.toUpperCase())}
+                                        <input className="no-border" type="file" onChange={_ =>
+                                            onImageChange(index, _.target.files[0])
+                                        } />
+                                    </label>
+                                    <div className='imageContainer'>
+                                        <div className='image'>
+                                            <img src={`${config.BaseImageUrl}${value}`} />
                                         </div>
-                                    </Fragment>
-                            }
-
+                                    </div>
+                                </Fragment>
+                            default:
+                                return
                         }
-                    })}
+                    })
+                }
 
                 {isSuccessful === true && <div className="form-success"><p>Content was updated successfully</p></div>}
                 {isSuccessful === false && <div className="form-fail"><p>Content was not updated, please try again</p></div>}

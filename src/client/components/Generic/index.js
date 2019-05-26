@@ -6,17 +6,17 @@ import { ContentContext } from '../Context'
 import { BaseImageUrl } from '../../../config.json'
 
 const Generic = ({ match: { path } }) => {
-    const { [path.replace('/', '')]: content } = useContext(ContentContext)
-
+    const { [path.replace('/', '')] : content } = useContext(ContentContext)
+    
     return <section className='generic-page'>
         <Header currentPageSlug={path}/>
         <div className="titleContiner">
-            <h2><span>{content.title[0]}</span></h2>
+            <h2><span>{content.title}</span></h2>
         </div>
         <div className="body">
-            {content.images && 
-                <img className='cover' src={`${BaseImageUrl}${content.images.find(_ => _.id === 'coverImage').path}`} />}
-            <Markdown markup={content.body[0]} />
+            {content.coverImage && 
+                <img className='cover' src={`${BaseImageUrl}${content.coverImage}`} />}
+            <Markdown markup={content.body} />
         </div>
         <Footer />
     </section>

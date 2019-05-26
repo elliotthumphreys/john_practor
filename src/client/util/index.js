@@ -69,7 +69,7 @@ export const GetContent = async () => {
 
         return {
             success: true,
-            content: content[0].data
+            content: content
         }
     }catch(error){
         console.log(error)

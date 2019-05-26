@@ -9,9 +9,9 @@ const Home = ({ match }) => {
 
     return <div className="home">
         <Header {...{
-            'header': [home['header-top'][0], home['header-bottom'][0]],
-            'desktopCoverImage': `${BaseImageUrl}${home.images.filter(_ => _.id === 'desktopCoverImage')[0].path}`,
-            'mobileCoverImage': `${BaseImageUrl}${home.images.filter(_ => _.id === 'mobileCoverImage')[0].path}`,
+            'header': [home['header-top'], home['header-bottom']],
+            'desktopCoverImage': `${BaseImageUrl}${home['desktopCoverImage']}`,
+            'mobileCoverImage': `${BaseImageUrl}${home['mobileCoverImage']}`,
             'nav': navigation,
             'currentPage': match.path
         }} />

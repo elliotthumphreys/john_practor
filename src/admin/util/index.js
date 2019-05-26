@@ -226,36 +226,56 @@ export const UpdateHat = async (id, data) => {
     }
 }
 
-export const UpdateContent = async (data, files) => {
-    console.log(data)
-    // try {
-    //     let { success, content, presignedUrls } = await submitData(`${config.ApiURL}content`, data, 'PUT')
+export const UpdateContent = async contentModel => {
+    var contentRequest = { ...contentModel }
 
-    //     if (success) {
-    //         for (let index = 0; index < presignedUrls.length; index++) {
-    //             const { id, url } = presignedUrls[index]
-    //             const { file } = files.find(_ => _.id = id)
+    contentRequest.data = contentModel.data.map(_ => {
+        if (_.type === 'image' && _.hasOwnProperty('file')) {
+            return {
+                type: _.type,
+                mimeType: _.file.type,
+                value: _.value,
+                name: _.name
+            }
+        }
+        return _
+    })
 
-    //             const imageUploadResponse = await uploadToS3(url, file)
+    console.log(contentRequest, contentModel)
 
-    //             success = success && imageUploadResponse
-    //         }
-    //     }
+    try {
+        let response = await submitData(`${config.ApiURL}content/${contentModel.id}`, contentRequest, 'PUT')
 
-    //     return {
-    //         success: success,
-    //         data: content.data
-    //     }
-    // } catch (error) {
-    //     return {
-    //         success: false
-    //     }
-    // }
+        console.log(response)
+        let { success, content, presignedUrls } = response
+        console.log(success, content, presignedUrls)
+        if (success) {
+            for (let i = 0; i < presignedUrls.length; i++) {
+                const { name, url } = presignedUrls[i]
+
+                const imageUploadResponse = await uploadToS3(url, contentModel.data.find(_ => _.name === name).file)
+
+                success = success && imageUploadResponse
+            }
+        }
+
+        return {
+            success: success,
+            data: content
+        }
+    } catch (error) {
+        console.log('Error Thrown: ', error)
+        return {
+            success: false
+        }
+    }
 }
 
 async function submitData(url = '', data = {}, method = 'POST') {
     let token = document.cookie.split(';').find(cookie => cookie.split('=')[0] == 'jwt')
     token = token ? token.split('=')[1] : ''
+
+    console.log(url, data, method)
 
     // Default options are marked with *
     return fetch(url, {

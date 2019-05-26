@@ -12,16 +12,24 @@ export const ContentProvider = ({ children }) => {
         const { success, content } = await GetContent()
 
         if (success) {
-            let parsedContent = { navigation: content.navigation }
+            let parsedContent = {}
 
-            content.pages.forEach(page => {
+            content.forEach(page => {
+                let parsedData = {}
+
+                page.data.forEach(dataItem => {
+                    parsedData[dataItem.name] = dataItem.value || dataItem.slug  
+                })
+
                 let parsedPage = {
-                    slug: page.slug,
-                    name: page.name,
-                    ...page.data
+                    slug: page.slug || page.type,
+                    name: page.name || page.type,
+                    ...parsedData
                 }
-                parsedContent[page.slug] = parsedPage
+                parsedContent[parsedPage.slug] = parsedPage
             });
+
+            console.log(parsedContent)
 
             setContent(parsedContent)
         }
@@ -32,7 +40,7 @@ export const ContentProvider = ({ children }) => {
         getContentAsync()
     }, [])
 
-    return <ContentContext.Provider value={{ ...content }}>
+    return <ContentContext.Provider value={content}>
         {content.isLoading || children}
     </ContentContext.Provider>
 }
