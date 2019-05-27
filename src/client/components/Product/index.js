@@ -12,7 +12,8 @@ const Product = ({ match: { path, params: { id } } }) => {
     const hat = useHat(id)
 
     const images = hat && hat.images.map(_ => {
-        return { original: `${BaseImageUrl}${_.path}`, thumbnail: `${BaseImageUrl}${_.path}` }
+        return { original: `${BaseImageUrl}${_.path}`, thumbnail: `${BaseImageUrl}${_.path}`, 
+        originalClass: 'galleryImage'}
     })
 
     return (
@@ -21,19 +22,20 @@ const Product = ({ match: { path, params: { id } } }) => {
             {hat && <div className="body">
                 <nav>
                     <Link to="/home">Home</Link>
-                    <span className="fas fa-chevron-right"></span>
-                    <Link to="/collection">Collection</Link>
-                    <span className="fas fa-chevron-right"></span>
-                    <Link to={`/collection/${hat.category}`}>{hat.category}</Link>
+                    <span>-</span>
+                    <Link to="/collections">Collections</Link>
+                    <span>-</span>
+                    <Link to={`/collections/${hat.category}`}>{hat.category}</Link>
                 </nav>
                 <div className="image-container">
-                    <ImageGallery items={images}
+                    <ImageGallery 
+                        items={images}
                         showFullscreenButton={false}
-                        showPlayButton={false} />
+                        showPlayButton={false} 
+                        showNav={true}/>
                 </div>
-                <p className="price">£{hat.price}</p>
                 <Markdown markdown={hat.description} />
-                <p className="credit">{hat.credit}</p>
+                <p className="credit"><b>Credit: </b>{hat.credit}</p>
             </div>}
             <Footer />
         </section>

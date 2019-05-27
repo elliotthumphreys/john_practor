@@ -40,8 +40,8 @@
   },
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
-    "npm": "^6.9.0",
     "react": "^16.8.4",
+    "react-cropper-image-editor": "^1.0.10",
     "react-dom": "^16.8.4",
     "react-image-gallery": "^0.8.16",
     "react-router-dom": "^4.3.1",

@@ -51,11 +51,10 @@ const Collection = ({ history, match: { url, params: { category } } }) => {
                 {!category && <Select options={categoryOptions} setCategory={setSelectedCategory} />}
                 <Masonry configuration={CONFIGURATION}>
                     {filteredHats
-                        .map(({ id, price, images }, index) => <ProductCard
+                        .map(({ id, coverImage }, index) => <ProductCard
                             id={id}
-                            path={`${BaseImageUrl}${images[0].path}`}
+                            path={`${BaseImageUrl}${coverImage}`}
                             history={history}
-                            price={price}
                             isSold={index % 3 === 0}
                         />)}
                 </Masonry>

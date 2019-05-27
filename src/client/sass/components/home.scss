@@ -8,7 +8,7 @@
     height: 100vh;
     overflow: hidden;
     margin: auto;
-    padding: 2em;
+    padding: 5em 6em;
     display: flex;
     flex-direction: column;
     align-content: right;
@@ -20,13 +20,40 @@
     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.11);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.11);
 
+    @media #{$desktop} {
+      &.mobile {
+        display: none;
+      }
+    }
+
+    @media #{$tablet, $mobile} {
+      &.desktop {
+        display: none;
+      }
+      padding: 0;
+    }
+
     > header {
       text-align: right;
-      @media #{$tablet} {
-        text-align: right;
-      }
-      @media #{$mobile} {
+      display: flex;
+      justify-content: flex-end;
+      text-align: center;
+      @media #{$tablet, $mobile} {
         text-align: center;
+        justify-content: center;
+        order: 1;
+        background-color: rgba(70, 70, 70, 0.4);
+        padding: 1.7em 0;
+      }
+      img {
+        height: 8em;
+        margin-right: 2em;
+        margin-top: 1em;
+        @media #{$tablet, $mobile} {
+          height: 4.5em;
+          margin: 0.4em 0 0 0;
+          padding-right: 0.9em;
+        }
       }
       h1 {
         display: inline-block;
@@ -66,12 +93,19 @@
     > nav {
       text-align: left;
       color: white;
-      font-size: 1.5em;
-      margin-top: 1em;
+      margin-top: 3em;
       display: flex;
       justify-content: flex-end;
+      flex-grow: 1;
 
       > div {
+        @media #{$mobile, $tablet} {
+          padding: 1em;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
         a {
           display: block;
           margin-bottom: 0.3em;
@@ -79,8 +113,8 @@
           text-decoration: none;
 
           span {
+            font-size: 1.4em;
             margin-bottom: 0.5em;
-            font-size: 1.5em;
             border-bottom: 2px solid transparent;
             cursor: pointer;
 
@@ -169,102 +203,45 @@
   margin: auto;
 }
 
-@media #{$desktop} {
-  .hide-on-desktop-and-tablet {
-    display: none !important;
-    visibility: hidden !important;
-  }
-}
-@media #{$mobile, $tablet} {
-  .hide-on-mobile {
-    display: none !important;
-    visibility: hidden !important;
-  }
-}
-
-.home-banner-container-mobile {
-  width: 100%;
-  min-height: 100vh;
-  overflow: hidden;
-  margin: auto;
-  display: flex;
-  padding: 0;
-  flex-direction: column;
-  align-content: right;
-  background-color: black;
-
-  img {
-    width: 100%;
-  }
-
-  h1,
-  nav {
-    padding: 0.5em;
-  }
-
-  > header {
+.home > .mobile {
+  > img {
+    height: 5em;
+    margin: 0.75em 0 0 0;
     order: 0;
-    text-align: right;
-    h1 {
-      display: inline-block;
+  }
+  > header {
+    order: 1;
+    background-color: white;
+    color: black;
+    padding: 0 0 1em 0;
+    > h1 {
       > span {
-        display: block;
-        color: white;
-        font-weight: 100;
-
-        &:first-child {
-          text-align: center;
-          font-size: 3em;
-        }
-        &:last-child {
-          font-size: 1.2em;
-          height: 1em;
-          line-height: 1em;
-          text-align: justify;
-          text-align-last: justify;
-
-          &:after {
-            content: "";
-            display: inline-block;
-            width: 100%;
-          }
+        color: black;
+        &:last-child{
+          line-height: 0.5em;
         }
       }
     }
   }
-  > nav {
-    text-align: left;
-    color: white;
-    font-size: 1em;
-    display: flex;
-    justify-content: flex-end;
+  > section {
+    order: 2;
     flex-grow: 1;
-    order: 1;
-
+    background-size: cover;
+    background-position: center;
+  }
+  > nav {
+    order: 3;
+    color: black;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    flex-grow: 0;
     > div {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      a {
-        display: block;
-        margin-bottom: 0.3em;
-        color: white;
-        text-decoration: none;
-
-        span {
-          margin-bottom: 0.5em;
-          font-size: 1.2em;
-          border-bottom: 2px solid transparent;
-          cursor: pointer;
-
-          &.active {
-            border-bottom: 2px solid white;
-          }
-
-          &:hover {
-            border-bottom: 2px solid white;
-          }
-        }
+      padding: 0.2em 0 0.2em 1em;
+      > a {
+        font-size: 0.9em;
+        margin: 0;
+        color: black;
       }
     }
   }

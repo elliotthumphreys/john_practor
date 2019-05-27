@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { ContentContext } from '../Context'
+import { BaseImageUrl } from '../../../config.json'
 
 const Header = ({ header, desktopCoverImage, mobileCoverImage, pageTitle, nav = [], currentPage }) => {
     const [url, setUrl] = useState('')
@@ -24,8 +25,9 @@ const Header = ({ header, desktopCoverImage, mobileCoverImage, pageTitle, nav = 
 
     return (
         <Fragment>
-            <SectionWithBackground className="home-banner-container hide-on-mobile">
+            <SectionWithBackground className="home-banner-container desktop">
                 <header>
+                    <img src={`${BaseImageUrl}logo-white.svg`} />
                     <h1>
                         <span>{header[0]}</span>
                         <span>{header[1].split('').join(' ')}</span>
@@ -44,14 +46,16 @@ const Header = ({ header, desktopCoverImage, mobileCoverImage, pageTitle, nav = 
                     </div>
                 </nav>
             </SectionWithBackground>
-            <section className="home-banner-container-mobile hide-on-desktop-and-tablet">
+            <section className="home-banner-container mobile">
+                
+            <img src={`${BaseImageUrl}logo-black.svg`} />
                 <header>
-                    <img src={url} />
                     <h1>
                         <span>{header[0]}</span>
                         <span>{header[1].split('').join(' ')}</span>
                     </h1>
                 </header>
+                <SectionWithBackground />
                 <nav>
                     <div>
                         {Object.keys(nav).map((name, key) => {
@@ -79,6 +83,7 @@ export const SmallHeader = ({ currentPageSlug }) => {
 
     return <section className="small-header">
         <header>
+            <img src={`${BaseImageUrl}logo-black.svg`} />
             <h1>
                 <span>{headerTop}</span>
                 <span>{headerBottom.split('').join(' ')}</span>

@@ -14,13 +14,13 @@ const Routes = () => {
       <HatsProvider>
         <Switch>
           <Route path="/home" component={Home} />
-          <Route path="/browse/:category" component={Collection} />
-          <Route path="/browse" component={Collection} />
-          <Route path="/terms" component={Generic} />
+          <Route path="/collections/:category" component={Collection} />
+          <Route path="/collections" component={Collection} />
+          <Route path="/process" component={Generic} />
           <Route path="/about" component={Generic} />
           <Route path="/contact" component={Generic} />
           <Route path="/product/:id" component={Product} />
-          <Redirect from="/product" to="/browse" />
+          <Redirect from="/product" to="/collections" />
           <Redirect to="/home" />
         </Switch>
       </HatsProvider>

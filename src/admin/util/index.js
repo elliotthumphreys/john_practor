@@ -163,10 +163,12 @@ export const DeleteHat = async id => {
 }
 
 export const CreateHat = async data => {
-    let jsonData = { ...data, images: Array.from(data.images).map(image => image.type) }
+    let jsonData = {    ...data, 
+                        images: Array.from(data.images).map(image => image.type),
+                        coverImage: data.coverImage.type }
 
     try {
-        let { success, hat, presignedUrls } = await submitData(`${config.ApiURL}hats`, jsonData)
+        let { success, hat, presignedUrls, coverPresigedUrl } = await submitData(`${config.ApiURL}hats`, jsonData)
 
         if (success) {
             let presignedImageUrls = presignedUrls.images
@@ -178,6 +180,10 @@ export const CreateHat = async data => {
 
                 success = success && imageUploadResponse
             }
+
+            const coverImageUploadResponse = await uploadToS3(coverPresigedUrl, data.coverImage)
+
+            success = success && coverImageUploadResponse
         }
 
         return {
@@ -194,13 +200,11 @@ export const CreateHat = async data => {
 export const UpdateHat = async (id, data) => {
     const jsonData = {
         ...data,
-        images: Array.from(data.images).map(image => image.type)
-    }
+        images: Array.from(data.images).map(image => image.type),
+        coverImage: data.coverImage ? data.coverImage.type : '' }
 
     try {
-        let { success, hat, presignedUrls } = await submitData(`${config.ApiURL}hats/${id}`, jsonData, 'PUT')
-
-        console.log(success, hat, presignedUrls)
+        let { success, hat, presignedUrls, coverPresigedUrl } = await submitData(`${config.ApiURL}hats/${id}`, jsonData, 'PUT')
 
         if (success) {
             let presignedImageUrls = presignedUrls.images
@@ -212,6 +216,12 @@ export const UpdateHat = async (id, data) => {
 
                 success = success && imageUploadResponse
             }
+        }
+
+        if(data.coverImage){
+            const coverImageUploadResponse = await uploadToS3(coverPresigedUrl, data.coverImage)
+    
+            success = success && coverImageUploadResponse
         }
 
         return {
@@ -241,14 +251,10 @@ export const UpdateContent = async contentModel => {
         return _
     })
 
-    console.log(contentRequest, contentModel)
-
     try {
         let response = await submitData(`${config.ApiURL}content/${contentModel.id}`, contentRequest, 'PUT')
 
-        console.log(response)
         let { success, content, presignedUrls } = response
-        console.log(success, content, presignedUrls)
         if (success) {
             for (let i = 0; i < presignedUrls.length; i++) {
                 const { name, url } = presignedUrls[i]
@@ -264,7 +270,6 @@ export const UpdateContent = async contentModel => {
             data: content
         }
     } catch (error) {
-        console.log('Error Thrown: ', error)
         return {
             success: false
         }
@@ -274,8 +279,6 @@ export const UpdateContent = async contentModel => {
 async function submitData(url = '', data = {}, method = 'POST') {
     let token = document.cookie.split(';').find(cookie => cookie.split('=')[0] == 'jwt')
     token = token ? token.split('=')[1] : ''
-
-    console.log(url, data, method)
 
     // Default options are marked with *
     return fetch(url, {
@@ -292,7 +295,6 @@ async function submitData(url = '', data = {}, method = 'POST') {
         referrer: "no-referrer", // no-referrer, *client
         body: JSON.stringify(data), // body data type must match "Content-Type" header
     }).then(response => {
-        console.log(response)
         return response.json()
     }); // parses JSON response into native Javascript objects 
 }
@@ -305,7 +307,6 @@ async function uploadToS3(url = '', file) {
         },
         body: file
     }).then(_ => {
-        console.log(_)
         return _.status === 200
     })
 }

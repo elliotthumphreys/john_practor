@@ -2,6 +2,29 @@
   grid-template-columns: 10% 1fr 10%;
   grid-template-rows: 50px auto auto 1fr;
 
+  .image-cropper{
+    width: 500px;
+    height: 500px;
+    margin: 0 0 5em 0;
+    br{
+      display: none;
+    }
+    ul, li {
+      display: inline-block;
+    }
+    button {
+      background-color: #00692f;
+      color: white;
+      padding: 0.3em;
+      border: 0;
+      margin: 0.5em 0.5em 0 0;
+      -webkit-box-shadow: 0 2px 0 #003618;
+      -moz-box-shadow: 0 2px 0 #003618;
+      box-shadow: 0 2px 0 #003618;
+      cursor: pointer;
+    }
+  }
+
   nav {
     grid-column-start: 2;
     grid-row-start: 2;
@@ -37,7 +60,7 @@
     }
   }
 
-  form {
+  form, #add-product-form {
     grid-column-start: 2;
     grid-row-start: 3;
 
@@ -112,7 +135,10 @@
       .low-margin {
         margin-bottom: 0.5em;
       }
-		}
+    }
+    .previewCoverImage{
+      width: 175px;
+    }
 	  .image {
     width: 25%;
     max-width: 200px;

@@ -13,11 +13,11 @@ form > .navContianer {
     display: flex;
     > label {
       display: inline-block;
-      margin-bottom: 0.5em;
+      margin-bottom: 0.3em !important;
       font-size: 0.9em;
       font-style: italic;
       > input {
-        width: 99%;
+        width: 99%!important;
       }
     }
     > span {

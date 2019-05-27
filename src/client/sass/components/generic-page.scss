@@ -7,18 +7,24 @@
 
   .body {
     flex-grow: 1;
-    padding: 0 0.5em 3em;
+    background-color: black;
+    color: white;
+
+    > div{
+      padding: 1em;
+      @media #{$tablet, $mobile} {
+        clear: both;
+      }
+    }
 
     img.cover {
       width: 50%;
       float: left;
       padding-right: 1em;
-      padding-bottom: 1em;
       @media #{$tablet, $mobile} {
         width: 100%;
         float: left;
         padding-right: 0;
-        padding-bottom: 1em;
       }
     }
 

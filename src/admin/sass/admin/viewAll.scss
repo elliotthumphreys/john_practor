@@ -31,27 +31,26 @@
         align-items: flex-start;
 
         > div {
-            background-color: white;
+            background-color: #2980b9;
             overflow: hidden;
-            border-bottom-left-radius: 0.2em;
-            border-bottom-right-radius: 0.2em;
+            border-radius: 0.2em;
 
             @media #{$desktop} {
                 margin-bottom: 1%;
                 &:nth-child(3n-1) {
                     margin: 0 1% 1% 1%;
                 }
-                width: 32.66%;
+                width: 15%;
             }
 
             @media #{$tablet} {
                 margin: 0 0 1% 0;
-                width: 100%;
+                width: 25%;
             }
 
             @media #{$mobile} {
                 margin: 0 0 1% 0;
-                width: 100%;
+                width: 50%;
             }
 
             h3 {
@@ -61,7 +60,7 @@
             }
 
             img {
-                height: 100px;
+                width: 100%;
             }
 
             p {

@@ -2,7 +2,12 @@
 .product-page {
   @extend .generic-page;
   > .body {
+    background-color: white;
+    color: black;
     padding: 2.5em 1em 0;
+    div {
+      padding-top: 0;
+    }
     .image-container {
       width: 66%;
       float: left;
@@ -11,14 +16,40 @@
         width: 100%;
         padding: 0 0 1em;
       }
-
+      .image-gallery-thumbnails-container{
+        margin-top: 0.5em;
+      }
+      .image-gallery-thumbnail{
+        width: auto;
+      }
+      .image-gallery-thumbnail .image-gallery-thumbnail-inner {
+        width: auto;
+        height: 90px;
+        overflow: hidden;
+      }
+      .image-gallery-thumbnail img {
+        vertical-align: middle;
+        height: 100%;
+      }
+      .image-gallery-left-nav,
+      .image-gallery-right-nav {
+        font-size: 3em;
+      }
       a.image-gallery-thumbnail {
         padding-bottom: 0;
       }
-
-      img {
-        width: 100%;
+      .image-gallery-slide.center.galleryImage {
+        text-align: center;
+        background-color: black;
+        img {
+          max-height: 66vh;
+          width: auto;
+        }
       }
+    }
+
+    .credit {
+      padding-left: 1em;
     }
 
     h1,

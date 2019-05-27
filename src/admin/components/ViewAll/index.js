@@ -24,12 +24,7 @@ const ViewAll = ({ history }) => {
         let { response } = await DeleteHat(id)
 
         if (response === 'success') {
-            setHats(hats.map(hat => {
-                if (hat._id === id) {
-                    hat.className = 'removed'
-                }
-                return hat
-            }))
+            setHats(hats.filter(hat => hat._id !== id))
         }
     }
 
@@ -49,20 +44,13 @@ const ViewAll = ({ history }) => {
                     const date = new Date(hat.dateCreated)
                     const displayDate = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
 
-                    return <div key={hat._id} className={hat.className}>
-                        {hat.className === 'removed' && <span class="fas fa-window-close"></span>}
-                        <h3>{hat.title.slice(0, 30)}</h3>
+                    return <div key={hat._id}>
+                        <h3>{displayDate}</h3>
                         <div>
                             <button onClick={() => deleteHat(hat._id)}>Delete</button>
                             <button onClick={() => history.push({ pathname: `/admin/update/${hat._id}` })}>Update</button>
                         </div>
-                        <p>£{hat.price}</p>
-                        <p>{hat.category}</p>
-                        <p>{hat.credit}</p>
-                        <p>{displayDate}</p>
-                        <div>
-                            {hat.images.map((image, key) => <img key={key} src={`${BaseImageUrl}${image.path}`} rel={image.description} />)}
-                        </div>
+                        <img src={`${BaseImageUrl}${hat.coverImage}`} />
                     </div>
                 }
                 )}
