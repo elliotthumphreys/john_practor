@@ -163,9 +163,11 @@ export const DeleteHat = async id => {
 }
 
 export const CreateHat = async data => {
-    let jsonData = {    ...data, 
-                        images: Array.from(data.images).map(image => image.type),
-                        coverImage: data.coverImage.type }
+    let jsonData = {
+        ...data,
+        images: Array.from(data.images).map(image => image.type),
+        coverImage: data.coverImage.type
+    }
 
     try {
         let { success, hat, presignedUrls, coverPresigedUrl } = await submitData(`${config.ApiURL}hats`, jsonData)
@@ -173,17 +175,20 @@ export const CreateHat = async data => {
         if (success) {
             let presignedImageUrls = presignedUrls.images
 
-            for (let index = 0; index < data.images.length; index++) {
-                const file = data.images[index], { url } = presignedImageUrls[index]
+            let attempts = []
+            
+            Array.from(data.images).forEach((image, index) => {
+                const { url } = presignedImageUrls[index]
+                attempts.push(uploadToS3(url, image))
+            })
 
-                const imageUploadResponse = await uploadToS3(url, file)
+            attempts.push(uploadToS3(coverPresigedUrl, data.coverImage))
 
-                success = success && imageUploadResponse
-            }
+            const results = await Promise.all(attempts)
 
-            const coverImageUploadResponse = await uploadToS3(coverPresigedUrl, data.coverImage)
-
-            success = success && coverImageUploadResponse
+            results.forEach(result => {
+                success = success && result
+            })
         }
 
         return {
@@ -201,7 +206,8 @@ export const UpdateHat = async (id, data) => {
     const jsonData = {
         ...data,
         images: Array.from(data.images).map(image => image.type),
-        coverImage: data.coverImage ? data.coverImage.type : '' }
+        coverImage: data.coverImage ? data.coverImage.type : ''
+    }
 
     try {
         let { success, hat, presignedUrls, coverPresigedUrl } = await submitData(`${config.ApiURL}hats/${id}`, jsonData, 'PUT')
@@ -218,9 +224,9 @@ export const UpdateHat = async (id, data) => {
             }
         }
 
-        if(data.coverImage){
+        if (data.coverImage) {
             const coverImageUploadResponse = await uploadToS3(coverPresigedUrl, data.coverImage)
-    
+
             success = success && coverImageUploadResponse
         }
 
@@ -299,7 +305,7 @@ async function submitData(url = '', data = {}, method = 'POST') {
     }); // parses JSON response into native Javascript objects 
 }
 
-async function uploadToS3(url = '', file) {
+function uploadToS3(url = '', file) {
     return fetch(url, {
         method: 'PUT',
         headers: {
