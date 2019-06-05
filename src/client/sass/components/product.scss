@@ -23,6 +23,9 @@
       }
       .image-gallery-thumbnails-container {
         margin-top: 0.5em;
+        .image-gallery-thumbnail.active {
+          border: 1px solid #636E6D;
+        }
       }
       .image-gallery-thumbnail {
         width: auto;
@@ -40,6 +43,9 @@
       .image-gallery-left-nav,
       .image-gallery-right-nav {
         font-size: 3em;
+        &::before{
+          color: #636E6D;
+        }
       }
       a.image-gallery-thumbnail {
         padding-bottom: 0;
@@ -82,7 +88,7 @@
 
       a,
       span {
-        color: #636e72;
+        color: #636E6D;
         text-decoration: none;
         padding: 0 0.2em;
         text-transform: lowercase;
