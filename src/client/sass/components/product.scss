@@ -2,9 +2,14 @@
 .product-page {
   @extend .generic-page;
   > .body {
-    background-color: white;
-    color: black;
-    padding: 2.5em 1em 0;
+    width: 80%;
+    margin: 2em auto;
+
+    @media #{$mobile, $tablet} {
+      width: 100%;
+      margin: 2em 0;
+    }
+
     div {
       padding-top: 0;
     }
@@ -16,10 +21,10 @@
         width: 100%;
         padding: 0 0 1em;
       }
-      .image-gallery-thumbnails-container{
+      .image-gallery-thumbnails-container {
         margin-top: 0.5em;
       }
-      .image-gallery-thumbnail{
+      .image-gallery-thumbnail {
         width: auto;
       }
       .image-gallery-thumbnail .image-gallery-thumbnail-inner {
@@ -70,6 +75,11 @@
       flex-direction: row;
       align-items: center;
       margin-bottom: 0.2em;
+      padding: 1em 1em 0;
+      @media #{$mobile, $tablet} {
+        padding: 1em 0 0;
+      }
+
       a,
       span {
         color: #636e72;

@@ -7,6 +7,9 @@ const Masonry = ({ children, configuration: { gap, columnOptions, className } })
     const Masonry = styled.section`
         display: flex;
         flex-direction: row;
+        margin: auto;
+        max-width: 1200px;
+        width: 100%;
     `
 
     const setNumberOfColumns = () => {
@@ -41,8 +44,8 @@ const Masonry = ({ children, configuration: { gap, columnOptions, className } })
         <Masonry className={className}>
             {arrays.map((children, index) => {
                 const Column = styled.div`
-                    padding-left: ${index == 0 ? '0em' : gap};
-                    padding-right: ${index == arrays.length - 1 ? '0em' : gap};
+                    margin-left: ${index == 0 ? '0em' : gap};
+                    margin-right: ${index == arrays.length - 1 ? '0em' : gap};
                     width: ${100 / column}%
                 `
                 return <Column key={index}>{children}</Column>
