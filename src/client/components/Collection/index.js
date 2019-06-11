@@ -53,7 +53,7 @@ const Collection = ({ history, match: { url, params: { category } } }) => {
                     {filteredHats
                         .map(({ id, coverImage }, index) => <ProductCard
                             id={id}
-                            path={`${BaseImageUrl}${coverImage}`}
+                            path={`${BaseImageUrl}400/${coverImage}`}
                             history={history}
                             isSold={index % 3 === 0}
                         />)}

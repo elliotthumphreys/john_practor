@@ -13,7 +13,7 @@ const Product = ({ match: { path, params: { id } } }) => {
 
     const images = hat && hat.images.map(_ => {
         return {
-            original: `${BaseImageUrl}${_.path}`, thumbnail: `${BaseImageUrl}${_.path}`,
+            original: `${BaseImageUrl}1000/${_.path}`, thumbnail: `${BaseImageUrl}400/${_.path}`,
             originalClass: 'galleryImage'
         }
     })
@@ -32,7 +32,8 @@ const Product = ({ match: { path, params: { id } } }) => {
                 <div className="image-container">
                     <ImageGallery
                         items={images}
-                        showFullscreenButton={false}
+                        showFullscreenButton={true}
+                        lazyLoad={true}
                         showPlayButton={false}
                         showNav={true} />
                 </div>

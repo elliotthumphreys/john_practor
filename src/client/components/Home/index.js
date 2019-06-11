@@ -11,7 +11,7 @@ const Home = ({ match }) => {
         <Header {...{
             'header': [home['header-top'], home['header-bottom']],
             'desktopCoverImage': `${BaseImageUrl}${home['desktopCoverImage']}`,
-            'mobileCoverImage': `${BaseImageUrl}${home['mobileCoverImage']}`,
+            'mobileCoverImage': `${BaseImageUrl}1000/${home['mobileCoverImage']}`,
             'nav': navigation,
             'currentPage': match.path
         }} />

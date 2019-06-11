@@ -14,8 +14,7 @@ const Generic = ({ match: { path } }) => {
             <h2><span>{content.title}</span></h2>
         </div>
         <div className="body">
-            {content.coverImage && 
-                <img className='cover' src={`${BaseImageUrl}${content.coverImage}`} />}
+            {content.coverImage && <img className='cover' src={`${BaseImageUrl}600/${content.coverImage}`} />}
             <Markdown markup={content.body} />
         </div>
         <Footer />

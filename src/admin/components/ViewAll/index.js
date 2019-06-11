@@ -50,7 +50,7 @@ const ViewAll = ({ history }) => {
                             <button onClick={() => deleteHat(hat._id)}>Delete</button>
                             <button onClick={() => history.push({ pathname: `/admin/update/${hat._id}` })}>Update</button>
                         </div>
-                        <img src={`${BaseImageUrl}${hat.coverImage}`} />
+                        <img src={`${BaseImageUrl}400/${hat.coverImage}`} />
                     </div>
                 }
                 )}
