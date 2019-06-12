@@ -48,6 +48,7 @@ const Masonry = ({ children, configuration: { gap, columnOptions, className } })
                     margin-right: ${index == arrays.length - 1 ? '0em' : gap};
                     width: ${100 / column}%
                 `
+
                 return <Column key={index}>{children}</Column>
             })}
         </Masonry>

@@ -11,5 +11,9 @@
   > .body {
     background-color: white;
     padding: 3em 0.5em;
+
+    &.all{
+      padding-top: calc(3em - 24.4px)
+    }
   }
 }

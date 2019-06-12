@@ -47,7 +47,7 @@ const Collection = ({ history, match: { url, params: { category } } }) => {
     return (
         <section className="collection">
             <Header currentPageSlug={url} />
-            <div className="body">
+            <div className={`body ${!category ? 'all' : ''}`}>
                 {!category && <Select options={categoryOptions} setCategory={setSelectedCategory} />}
                 <Masonry configuration={CONFIGURATION}>
                     {filteredHats
