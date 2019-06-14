@@ -3,8 +3,8 @@ const webpack = require("webpack");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
+  watch: true,
   entry: ['babel-polyfill', "./src/index.js"],
-  mode: "production",
   module: {
     rules: [
       {
@@ -43,20 +43,6 @@ module.exports = {
     publicPath: "http://localhost:3000/",
     hotOnly: true,
     historyApiFallback: true
-  },
-  optimization: {
-    minimizer: [new UglifyJsPlugin()],
-    namedModules: false,
-    namedChunks: false,
-    nodeEnv: 'production',
-    flagIncludedChunks: true,
-    occurrenceOrder: true,
-    sideEffects: true,
-    usedExports: true,
-    concatenateModules: true,
-    noEmitOnErrors: true,
-    checkWasmTypes: true,
-    minimize: true,
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

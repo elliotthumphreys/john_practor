@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import Footer from '../Footer'
 import { SmallHeader as Header } from '../Header'
-import { Markdown } from 'react-showdown'
+import Markdown from '../../util/Showdown'
 import { ContentContext } from '../Context'
 import { BaseImageUrl } from '../../../config.json'
 
