@@ -11,7 +11,7 @@
     color: white;
 
     > div {
-      padding: 1em;
+      padding: 2em;
       @media #{$tablet, $mobile} {
         clear: both;
       }
@@ -20,11 +20,11 @@
     img.cover {
       width: 50%;
       float: left;
-      padding-right: 1em;
+      margin-right: 2em;
       @media #{$tablet, $mobile} {
         width: 100%;
         float: left;
-        padding-right: 0;
+        margin-right: 0;
       }
     }
 
@@ -44,7 +44,6 @@
 
             &:last-child {
               font-size: 0.5em;
-              border-bottom: 1px solid white;
             }
           }
         }
