@@ -13,7 +13,7 @@ const Product = ({ match: { path, params: { id } } }) => {
 
     const images = hat && hat.images.map(_ => {
         return {
-            original: `${BaseImageUrl}1000/${_.path}`, thumbnail: `${BaseImageUrl}400/${_.path}`,
+            original: `${BaseImageUrl}1000/${_.path}`, thumbnail: `${BaseImageUrl}300/${_.path}`,
             originalClass: 'galleryImage'
         }
     })

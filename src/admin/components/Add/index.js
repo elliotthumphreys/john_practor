@@ -61,6 +61,7 @@ const Add = ({ history, match }) => {
             setCategory('')
             setCredit('')
             setCoverImage()
+            setPreviewCoverImage()
             setParsedCoverImage()
             setImages([])
 
@@ -87,6 +88,7 @@ const Add = ({ history, match }) => {
             setDeletedImages([])
             setImages([])
             setCoverImage()
+            setPreviewCoverImage()
             setParsedCoverImage()
 
             //images is an uncontrolled input so have to do this to reset its fields
@@ -188,7 +190,7 @@ const Add = ({ history, match }) => {
                                     :
                                     <button type="button" className='add-button' onClick={() => deleteImageOnClick(images._id)}>add image</button>
                                 }
-                                <img src={`${config.BaseImageUrl}${images.path}`} />
+                                <img src={`${config.BaseImageUrl}300/${images.path}`} />
                             </div>
                         ))}
                     </div>

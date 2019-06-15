@@ -10,7 +10,7 @@ const Home = ({ match }) => {
     return <div className="home">
         <Header {...{
             'header': [home['header-top'], home['header-bottom']],
-            'desktopCoverImage': `${BaseImageUrl}${home['desktopCoverImage']}`,
+            'desktopCoverImage': `${BaseImageUrl}1920/${home['desktopCoverImage']}`,
             'mobileCoverImage': `${BaseImageUrl}1000/${home['mobileCoverImage']}`,
             'nav': navigation,
             'currentPage': match.path

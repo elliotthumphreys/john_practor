@@ -311,7 +311,7 @@ function uploadToS3(url = '', file) {
         headers: {
             "Content-Type": file.type
         },
-        body: file
+        body: `${file}`
     }).then(_ => {
         return _.status === 200
     })

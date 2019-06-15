@@ -133,7 +133,7 @@ const UpdateContentComponent = ({ history }) => {
                                     </label>
                                     <div className='imageContainer'>
                                         <div className='image'>
-                                            <img src={`${config.BaseImageUrl}${value}`} />
+                                            <img src={`${config.BaseImageUrl}300/${value}`} />
                                         </div>
                                     </div>
                                 </Fragment>
