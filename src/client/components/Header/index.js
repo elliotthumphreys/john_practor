@@ -19,13 +19,29 @@ const Header = ({ header, desktopCoverImage, mobileCoverImage, pageTitle, nav = 
         return () => window.removeEventListener('resize', changeUrl)
     })
 
-    const SectionWithBackground = styled.section`
-        background-image: url("${url}");
-    `
+    const [Background, setBackground] = useState(styled.section`
+        background-image: url(${BaseImageUrl}logo-white.svg);
+        background-color: rgba(0,0,0,0.3);
+        background-size: 175px;
+        background-position: center;
+    `)
+    useEffect(() => {
+        let image = new Image()
+        image.src = url
+
+        image.onload = () => {
+            setBackground(styled.section`
+                background-image: url(${url});
+                background-size: cover;
+                background-position-x: right;
+                background-position-y: top;
+            `)
+        }
+    }, [url])
 
     return (
         <Fragment>
-            <SectionWithBackground className="home-banner-container desktop">
+            <Background className="home-banner-container desktop">
                 <header>
                     <img src={`${BaseImageUrl}logo-white.svg`} />
                     <h1>
@@ -45,17 +61,17 @@ const Header = ({ header, desktopCoverImage, mobileCoverImage, pageTitle, nav = 
                         })}
                     </div>
                 </nav>
-            </SectionWithBackground>
+            </Background>
             <section className="home-banner-container mobile">
-                
-            <img src={`${BaseImageUrl}logo-black.svg`} />
+
+                <img src={`${BaseImageUrl}logo-black.svg`} />
                 <header>
                     <h1>
                         <span>{header[0]}</span>
                         <span>{header[1].split('').join(' ')}</span>
                     </h1>
                 </header>
-                <SectionWithBackground />
+                <Background/>
                 <nav>
                     <div>
                         {Object.keys(nav).map((name, key) => {
