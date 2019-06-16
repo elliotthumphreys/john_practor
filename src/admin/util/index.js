@@ -1,5 +1,4 @@
 import config from '../../config.json'
-import { fileURLToPath } from 'url';
 
 const CreateTokenCookie = (token, days) => {
     var expires = "";
@@ -311,7 +310,7 @@ function uploadToS3(url = '', file) {
         headers: {
             "Content-Type": file.type
         },
-        body: `${file}`
+        body: file
     }).then(_ => {
         return _.status === 200
     })

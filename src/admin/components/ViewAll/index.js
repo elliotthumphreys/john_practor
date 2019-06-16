@@ -31,6 +31,8 @@ const ViewAll = ({ history }) => {
     useEffect(() => {
         checkAuthentication()
         getHats()
+
+        return () => setHats([])
     }, []);
 
     return (

@@ -10,17 +10,17 @@ const Login = ({history}) => {
         message: ''
     })
 
-    useEffect(() => {
-        checkAuthentication()
-    }, [])
+    // useEffect(() => {
+    //     checkAuthentication()
+    // }, [])
     
-    const checkAuthentication = async () => {
-        const { authenticated } = await CheckTokenAuthentication()
+    // const checkAuthentication = async () => {
+    //     const { authenticated } = await CheckTokenAuthentication()
 
-        if (authenticated) {
-            history.push({ pathname: '/admin/view-all' })
-        }
-    }
+    //     if (authenticated) {
+    //         history.push({ pathname: '/admin/view-all' })
+    //     }
+    // }
 
     const loginUser = async (event, username, password) => {
         event.preventDefault()
