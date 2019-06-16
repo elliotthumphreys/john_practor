@@ -1,5 +1,5 @@
 {
     "BaseImageUrl": "https://images.johnproctormilliner.com/",
-    "ApiURL": "http://localhost:3001/",
-    "ApiURLTest": "https://api.johnproctormilliner.com/"
+    "ApiURLTest": "http://localhost:3001/",
+    "ApiURL": "https://api.johnproctormilliner.com/"
 }
