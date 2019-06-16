@@ -22,18 +22,7 @@ const Magnifier = (img, zoom) => {
     let { x, y } = getCursorPosWithinImage(e);
     if (x < 0 || y < 0 || x > img.width || y > img.height) {
       glass.style.display = "none"
-      glass.removeEventListener("mousemove", moveMagnifier);
-      img.removeEventListener("mousemove", moveMagnifier);
-      /*and also for touch screens:*/
-      glass.removeEventListener("touchmove", moveMagnifier);
-      img.removeEventListener("touchmove", moveMagnifier);
     } else {
-      glass.addEventListener("mousemove", moveMagnifier);
-      img.addEventListener("mousemove", moveMagnifier);
-      /*and also for touch screens:*/
-      glass.addEventListener("touchmove", moveMagnifier);
-      img.addEventListener("touchmove", moveMagnifier);
-
       moveMagnifier(e)
     }
   }
