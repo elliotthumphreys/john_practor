@@ -7,7 +7,7 @@ const Magnifier = (img, zoom) => {
   /*insert magnifier glass:*/
   img.parentElement.insertBefore(glass, img);
   /*set background properties for the magnifier glass:*/
-  glass.style.backgroundImage = "url('" + img.src + "')";
+  glass.style.backgroundImage = "url('" + img.src.replace(/1000/, '1920') + "')";
   glass.style.backgroundRepeat = "no-repeat";
   bw = 2;
   w = glass.offsetWidth / 2;
