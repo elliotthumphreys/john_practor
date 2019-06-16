@@ -9,20 +9,11 @@ const ProductCard = ({ id, path, history: { push } }) => {
     const uniqueId = uuid()
 
     useEffect(() => {
-        const image = document.getElementsByClassName(`placeholder-image-${uniqueId}`)[0]
+        const container = document.getElementsByClassName(`placeholder-container-${uniqueId}`)[0]
 
-        const listernerFunction = () => {
-            const container = document.getElementsByClassName(`placeholder-container-${uniqueId}`)[0]
-
-            console.log('Width', container.offsetWidth)
-
+        if(container){
             setHeight(container.offsetWidth / (243817 / 365067))
         }
-
-        image.addEventListener('load', listernerFunction)
-        listernerFunction()
-
-        return () => image.removeEventListener('load', listernerFunction)
     }, [])
 
     const PreloadedImage = () => {

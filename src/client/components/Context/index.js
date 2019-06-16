@@ -29,14 +29,11 @@ export const ContentProvider = ({ children }) => {
                 parsedContent[parsedPage.slug] = parsedPage
             });
 
-            console.log(parsedContent)
-
             setContent(parsedContent)
         }
     }
 
     useEffect(() => {
-        console.log('provider is getting content ?')
         getContentAsync()
     }, [])
 
@@ -49,15 +46,19 @@ export const HatsProvider = ({ children }) => {
     const [hats, setHats] = useState([])
 
     const getHats = async () => {
+        let hatsCopy = hats
+
         if (hats.length === 0) {
             const { success, hats } = await GetHats()
+            
+            hatsCopy = hats.filter(hat => hat.category !== 'test')
 
             if (success) {
-                setHats(hats)
+                setHats(hatsCopy)
             }
         }
 
-        return hats
+        return hatsCopy
     }
 
     const getHat = async id => {

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { GetHats } from '../../util'
 import ProductCard from './ProductCard'
 import Masonry from './Masonry';
 import { SmallHeader as Header } from '../Header'
 import Footer from '../Footer';
 import Select from './Select'
+import { HatsContext } from '../Context'
 
 import "../../sass/main.scss"
 
@@ -56,6 +57,7 @@ const Collection = ({ history, match: { url, params: { category } } }) => {
                             path={`${BaseImageUrl}400/${coverImage}`}
                             history={history}
                             isSold={index % 3 === 0}
+                            key={index}
                         />)}
                 </Masonry>
             </div>
@@ -65,13 +67,14 @@ const Collection = ({ history, match: { url, params: { category } } }) => {
 }
 
 function useHats() {
-    const [hats, setHats] = useState([])
+    const [ hats, setHats ] = useState([])
+    const { getHats } = useContext(HatsContext)
 
     const getHatsAsync = async () => {
-        const response = await GetHats()
+        const hatsResponse = await getHats()
 
-        if (response.success) {
-            setHats(response.hats)
+        if (hatsResponse) {
+            setHats(hatsResponse)
         }
     }
 

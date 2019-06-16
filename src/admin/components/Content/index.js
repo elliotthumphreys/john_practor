@@ -14,8 +14,6 @@ const UpdateContentComponent = ({ history }) => {
     const getContent = async () => {
         const result = await GetContent()
 
-        console.log(result)
-
         if (result.authenticated) {
             setEditableContent(result.content)
             setCurrentContent(result.content.find(_ => _.slug === "home"))

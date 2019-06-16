@@ -14,9 +14,7 @@ const MarkdownWrapper = ({ markup }) => {
             </header>
         </section>`
 
-    console.log(typeof markup)
     const parsedContent = markup.replace(/@custom-header@/, CUSTOM_HEADER_JSX)
-    console.log(typeof parsedContent)
 
     return <Markdown markup={parsedContent} />
 }

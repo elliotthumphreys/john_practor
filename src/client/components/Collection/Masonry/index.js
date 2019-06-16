@@ -29,13 +29,13 @@ const Masonry = ({ children, configuration: { gap, columnOptions, className } })
     }
 
     let count = 0;
-    children.forEach(child => {
+    children.forEach((child, index) => {
         const Item = styled.div`
             padding-top: ${arrays[count].length === 0 ? '0em' : gap};
             padding-bottom: ${gap};
         `
 
-        arrays[count] = [...arrays[count], <Item>{child}</Item>]
+        arrays[count] = [...arrays[count], <Item key={index}>{child}</Item>]
 
         count === arrays.length - 1 ? count = 0 : count++
     });

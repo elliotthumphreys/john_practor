@@ -12,10 +12,10 @@ const Select = ({ options, setCategory }) => {
     }
 
     return <section className="filter">
-        <a onClick={_ => setClickedP(!clickedP)}><span class="fas fa-filter" /><span>{selected}</span></a>
+        <a onClick={_ => setClickedP(!clickedP)}><span className="fas fa-filter" /><span>{selected}</span></a>
         <ul className={clickedP ? 'show' : 'hide'}>
-            {options.filter(option => option !== selected).map(option =>
-                <li onClick={_ => onChange(option)}>{option}</li>)}
+            {options.filter(option => option !== selected).map((option, index) =>
+                <li key={index} onClick={_ => onChange(option)}>{option}</li>)}
         </ul>
     </section>
 

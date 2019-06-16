@@ -52,7 +52,6 @@ export const GetHat = async id => {
             hat
         }
     } catch (error) {
-        console.log(error)
         return {
             success: false
         }
@@ -60,9 +59,9 @@ export const GetHat = async id => {
 }
 
 export const GetContent = async () => {
-    try{
+    try {
         const response = await CallApi({
-            endpoint: `content`, 
+            endpoint: `content`,
             method: 'GET'
         })
         const content = await response.json()
@@ -71,8 +70,7 @@ export const GetContent = async () => {
             success: true,
             content: content
         }
-    }catch(error){
-        console.log(error)
+    } catch (error) {
         return {
             success: false,
             content: {}
