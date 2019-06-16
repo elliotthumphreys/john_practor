@@ -4,19 +4,25 @@ import Footer from '../Footer'
 import { SmallHeader as Header } from '../Header'
 import { Markdown } from 'react-showdown'
 import { HatsContext } from '../Context'
-import ImageGallery from 'react-image-gallery';
+import ImageGallery from 'react-image-gallery'
+import magnifier from '../Magnifier'
 
+import "react-image-gallery/styles/css/image-gallery.css";
 import { BaseImageUrl } from '../../../config.json'
 
 const Product = ({ match: { path, params: { id } } }) => {
     const hat = useHat(id)
 
-    const images = hat && hat.images.map(_ => {
+    const images = hat && hat.images.map((_, index) => {
         return {
             original: `${BaseImageUrl}1000/${_.path}`, thumbnail: `${BaseImageUrl}300/${_.path}`,
             originalClass: 'galleryImage'
         }
     })
+
+    const imagesHaveLoaded = target => {
+        magnifier(target, 2)
+    }
 
     return (
         <section className='product-page'>
@@ -32,10 +38,11 @@ const Product = ({ match: { path, params: { id } } }) => {
                 <div className="image-container">
                     <ImageGallery
                         items={images}
-                        showFullscreenButton={true}
+                        showFullscreenButton={false}
                         lazyLoad={true}
                         showPlayButton={false}
-                        showNav={true} />
+                        showNav={true}
+                        onImageLoad={event => imagesHaveLoaded(event.target)} />
                 </div>
                 <Markdown markdown={hat.description} />
                 {hat.credit && <p className="credit"><b>Credit: </b>{hat.credit}</p>}

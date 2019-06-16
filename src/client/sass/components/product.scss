@@ -24,7 +24,7 @@
       .image-gallery-thumbnails-container {
         margin-top: 0.5em;
         .image-gallery-thumbnail.active {
-          border: 1px solid #636E6D;
+          border: 1px solid #636e6d;
         }
       }
       .image-gallery-thumbnail {
@@ -43,8 +43,8 @@
       .image-gallery-left-nav,
       .image-gallery-right-nav {
         font-size: 3em;
-        &::before{
-          color: #636E6D;
+        &::before {
+          color: #636e6d;
         }
       }
       a.image-gallery-thumbnail {
@@ -56,12 +56,13 @@
         img {
           max-height: 66vh;
           width: auto;
+          max-width: 120%;
         }
       }
     }
 
     .credit {
-      padding-left: 1em;
+      padding: 0 2em 2em;
     }
 
     h1,
@@ -88,7 +89,7 @@
 
       a,
       span {
-        color: #636E6D;
+        color: #636e6d;
         text-decoration: none;
         padding: 0 0.2em;
         text-transform: lowercase;
