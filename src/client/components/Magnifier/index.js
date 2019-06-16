@@ -9,7 +9,6 @@ const Magnifier = (img, zoom) => {
   /*set background properties for the magnifier glass:*/
   glass.style.backgroundImage = "url('" + img.src + "')";
   glass.style.backgroundRepeat = "no-repeat";
-  glass.style.display = "none"
   bw = 2;
   w = glass.offsetWidth / 2;
   h = glass.offsetHeight / 2;
@@ -17,7 +16,9 @@ const Magnifier = (img, zoom) => {
   window.addEventListener("mousemove", addOrRemoveEvents)
   window.addEventListener("touchmove", addOrRemoveEvents)
 
-  function addOrRemoveEvents(){
+  glass.style.display = "none"
+
+  function addOrRemoveEvents(e){
     let { x, y } = getCursorPosWithinImage(e);
     if (x < 0 || y < 0 || x > img.width || y > img.height) {
       glass.style.display = "none"
@@ -64,8 +65,6 @@ const Magnifier = (img, zoom) => {
       y = (h / zoom)
       pY = yDiff + (h / zoom)
     }
-
-    console.log('px: ', pX, ' py:', pY, ' x:', x, ' y:', y)
 
     glass.style.left = (pX - w) + "px"
     glass.style.top = (pY - h) + "px"
