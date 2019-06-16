@@ -28,13 +28,13 @@ const Magnifier = (img, zoom) => {
       glass.removeEventListener("touchmove", moveMagnifier);
       img.removeEventListener("touchmove", moveMagnifier);
     } else {
-      glass.style.display = "block"
-
       glass.addEventListener("mousemove", moveMagnifier);
       img.addEventListener("mousemove", moveMagnifier);
       /*and also for touch screens:*/
       glass.addEventListener("touchmove", moveMagnifier);
       img.addEventListener("touchmove", moveMagnifier);
+
+      moveMagnifier(e)
     }
   }
 
@@ -69,6 +69,8 @@ const Magnifier = (img, zoom) => {
     glass.style.top = (pY - h) + "px"
 
     glass.style.backgroundPosition = `-${(x * zoom) - w + bw}px -${(y * zoom) - h + bw}px`
+
+    glass.style.display = "block"
   }
 
   function getCursorPosWithinParent(e) {
