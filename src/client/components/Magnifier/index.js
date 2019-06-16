@@ -39,7 +39,6 @@ const Magnifier = (img, zoom) => {
   }
 
   function moveMagnifier(e) {
-    e.preventDefault();
     glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
 
     let { x, y } = getCursorPosWithinImage(e)
